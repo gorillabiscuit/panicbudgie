@@ -13,8 +13,10 @@ dist
 .claude
 skills-lock.json
 
-# Heavy source assets — too large for git, kept local
-character
+# Heavy source assets (PSDs and source-of-truth folder are kept local).
+# `/character` is root-anchored so the curated `style-guide/character/`
+# subset stays tracked.
+/character
 *.psd
 *.3dm
 

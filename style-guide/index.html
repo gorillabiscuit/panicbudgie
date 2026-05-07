@@ -1,0 +1,2242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panicbudgie · Brand &amp; Mascot Style Guide</title>
+  <meta name="description" content="The single source of truth for Panicbudgie identity, character, and copy." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* === TOKENS · extracted from src/styles.css, no estimation === */
+    :root {
+      --sun:        #F2B705;
+      --sun-deep:   #E0A800;
+      --sun-halo:   #FDCB0E; /* used in pricing text-shadow */
+      --coral:      #FF6A3D;
+      --coral-deep: #B73B11;
+      --blossom:    #FFC8DD;
+      --sky:        #5BA9F5;
+      --cloud:      #FAF3E4;
+      --cloud-deep: #F2E8D2;
+      --ink:        #1F1B16;
+      --ink-2:      #2A241D;
+      --ink-3:      #322C24;
+      --ink-soft:   #5C5147;
+
+      --max-width: 1280px;
+      --pad-x:    clamp(24px, 4vw, 56px);
+
+      --space-3xs: 0.25rem;
+      --space-2xs: 0.5rem;
+      --space-xs:  0.75rem;
+      --space-sm:  1rem;
+      --space-md:  1.5rem;
+      --space-lg:  2.5rem;
+      --space-xl:  4rem;
+      --space-2xl: 6rem;
+      --space-3xl: 8rem;
+
+      --radius-sm:   12px;
+      --radius-md:   16px;
+      --radius-lg:   28px;
+      --radius-pill: 999px;
+
+      --font-family:         "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-display-family: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+      --text-display-xl: clamp(3.5rem, 6vw, 5rem);
+      --text-display-lg: clamp(2.5rem, 4vw, 3.5rem);
+      --text-display:    clamp(2rem, 3vw, 2.5rem);
+      --text-heading:    clamp(1.5rem, 2vw, 1.75rem);
+      --text-title:      clamp(1.25rem, 1.4vw, 1.375rem);
+      --text-lead:       clamp(1.0625rem, 1.1vw, 1.1875rem);
+      --text-body:       1rem;
+      --text-label:      0.875rem;
+      --text-caption:    0.75rem;
+
+      --weight-regular:    400;
+      --weight-medium:     500;
+      --weight-semibold:   600;
+      --weight-bold:       700;
+      --weight-extrabold:  800;
+
+      --track-display:  -0.025em;
+      --track-heading:  -0.015em;
+      --track-default:   0;
+      --track-eyebrow:   0.12em;
+
+      --lead-tight:    0.95;
+      --lead-snug:     1.05;
+      --lead-normal:   1.2;
+      --lead-relaxed:  1.55;
+      --lead-loose:    1.65;
+
+      --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+      /* Documentation-only helpers (do/dont, tag chips). Scoped to this file. */
+      --doc-pass-ink:    #1B7C3F;
+      --doc-pass-bg:     #ECF7EF;
+      --doc-fail-bg:     #FCEAE3;
+      --doc-trans-ink:   #2B5A85;
+    }
+
+    /* === RESET === */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-family);
+      color: var(--ink);
+      background: var(--cloud);
+      font-size: var(--text-body);
+      font-weight: var(--weight-regular);
+      line-height: var(--lead-relaxed);
+      letter-spacing: var(--track-default);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img, svg { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4, h5, p, ul, ol { margin: 0; }
+    h1, h2, h3 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    ul { list-style: none; padding: 0; }
+    code, pre { font-family: var(--font-mono); }
+
+    /* === SKIP LINK === */
+    .skip-link {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 12px 20px;
+      background: var(--ink);
+      color: var(--cloud);
+      border-radius: var(--radius-pill);
+      font-weight: var(--weight-bold);
+      font-size: var(--text-body);
+      z-index: 1000;
+      transform: translateY(calc(-100% - 24px));
+      transition: transform 180ms var(--ease-out-quint);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* === LAYOUT: sidebar + main === */
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    .sidebar {
+      background: var(--sun);
+      color: var(--ink);
+      border-right: 1px solid var(--sun-deep);
+      /* No height cap or sticky here; outer fills the grid cell so Sun reaches the bottom of the page. */
+    }
+    .sidebar__sticky {
+      position: sticky;
+      top: 0;
+      max-height: 100vh;
+      overflow-y: auto;
+      padding: var(--space-md) var(--space-md) var(--space-xl);
+    }
+    .sidebar__sticky::-webkit-scrollbar { width: 6px; }
+    .sidebar__sticky::-webkit-scrollbar-thumb { background: rgba(31,27,22,0.18); border-radius: 999px; }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xs);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--sun-deep);
+    }
+    .brand__bird {
+      width: 88px;
+      height: 88px;
+      object-fit: contain;
+      object-position: center;
+    }
+    .brand__name {
+      font-weight: var(--weight-extrabold);
+      font-size: var(--text-title);
+      letter-spacing: var(--track-heading);
+      margin-top: 4px;
+    }
+    .brand__tag {
+      font-size: var(--text-caption);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      font-weight: var(--weight-semibold);
+      opacity: 0.7;
+    }
+
+    .nav {
+      margin-top: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .nav__num {
+      font-variant-numeric: tabular-nums;
+      font-weight: var(--weight-extrabold);
+      opacity: 0.55;
+      width: 1.5em;
+      flex-shrink: 0;
+    }
+    .nav a {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+      gap: var(--space-2xs);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: var(--text-body);
+      font-weight: var(--weight-semibold);
+      color: var(--ink);
+      transition: background 160ms ease, transform 120ms ease;
+    }
+    .nav a:hover { background: rgba(31,27,22,0.08); }
+    .nav a:active { transform: translateX(2px); }
+    .nav a:focus-visible {
+      outline: 3px solid var(--coral-deep);
+      outline-offset: 3px;
+    }
+
+    .main {
+      padding: clamp(40px, 5vw, 80px) var(--pad-x);
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* === PAGE HEAD === */
+    .page-head {
+      padding-bottom: var(--space-2xl);
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: var(--space-2xl);
+      position: relative;
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: var(--text-label);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      color: var(--coral-deep);
+      margin-bottom: var(--space-md);
+    }
+    .eyebrow--neutral { color: var(--ink-soft); }
+    .page-head h1 {
+      font-size: var(--text-display-xl);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-display);
+      line-height: var(--lead-tight);
+    }
+    .page-head .dek {
+      margin-top: var(--space-md);
+      font-size: var(--text-lead);
+      line-height: var(--lead-relaxed);
+      color: var(--ink-soft);
+      max-width: 60ch;
+      font-weight: var(--weight-medium);
+    }
+    .page-head .dek strong { color: var(--ink); font-weight: var(--weight-bold); }
+    .page-head__bird {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: clamp(160px, 22vw, 260px);
+      pointer-events: none;
+    }
+    @media (max-width: 900px) {
+      .page-head__bird { display: none; }
+    }
+
+    /* === SECTIONS === */
+    section {
+      padding-top: var(--space-2xl);
+      padding-bottom: var(--space-2xl);
+      scroll-margin-top: 24px;
+    }
+    section + section { border-top: 1px solid rgba(31,27,22,0.12); }
+    .section__head {
+      display: flex;
+      gap: var(--space-md);
+      align-items: baseline;
+      margin-bottom: var(--space-md);
+    }
+    .section__num {
+      font-size: var(--text-display);
+      font-weight: var(--weight-extrabold);
+      color: var(--ink-soft);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: var(--track-display);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .section h2 {
+      font-size: var(--text-display-lg);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-display);
+      line-height: var(--lead-snug);
+    }
+    .section__intro {
+      font-size: var(--text-lead);
+      line-height: var(--lead-relaxed);
+      color: var(--ink-soft);
+      max-width: 60ch;
+      font-weight: var(--weight-medium);
+      margin-bottom: var(--space-xl);
+    }
+    .section__intro strong { color: var(--ink); font-weight: var(--weight-bold); }
+
+    h3 {
+      font-size: var(--text-heading);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-heading);
+      line-height: var(--lead-normal);
+      margin-top: var(--space-xl);
+      margin-bottom: var(--space-sm);
+    }
+    h4 {
+      font-size: var(--text-title);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--track-heading);
+      margin-top: var(--space-lg);
+      margin-bottom: var(--space-xs);
+    }
+    p + p { margin-top: var(--space-sm); }
+
+    /* === RULE BLOCK (prescriptive, not descriptive) === */
+    /* No side-stripe; emphasis lives in the warm-cream tint + the coral-deep label badge. */
+    .rule {
+      padding: var(--space-md);
+      background: var(--cloud-deep);
+      border: 1px solid rgba(31, 27, 22, 0.10);
+      border-radius: var(--radius-sm);
+      margin-block: var(--space-md);
+    }
+    .rule__label {
+      display: inline-block;
+      font-size: var(--text-caption);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      color: var(--cloud);
+      background: var(--coral-deep);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      margin-bottom: var(--space-xs);
+    }
+    .rule__body {
+      font-size: var(--text-body);
+      line-height: var(--lead-relaxed);
+      font-weight: var(--weight-medium);
+    }
+    .rule__body strong { font-weight: var(--weight-bold); }
+
+    /* === DO / DON'T COLUMNS === */
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-block: var(--space-md);
+    }
+    .do-dont__col {
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      border: 2px solid;
+    }
+    .do-dont__col--do { border-color: var(--doc-pass-ink); background: var(--doc-pass-bg); }
+    .do-dont__col--dont { border-color: var(--coral-deep); background: var(--doc-fail-bg); }
+    .do-dont__label {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      margin-bottom: var(--space-2xs);
+    }
+    .do-dont__col--do .do-dont__label { color: var(--doc-pass-ink); }
+    .do-dont__col--dont .do-dont__label { color: var(--coral-deep); }
+    .do-dont__example {
+      font-size: var(--text-body);
+      font-weight: var(--weight-semibold);
+      line-height: var(--lead-relaxed);
+      color: var(--ink);
+    }
+    .do-dont__caption {
+      margin-top: var(--space-2xs);
+      font-size: var(--text-caption);
+      color: var(--ink-soft);
+      font-weight: var(--weight-medium);
+    }
+    @media (max-width: 720px) {
+      .do-dont { grid-template-columns: 1fr; }
+    }
+
+    /* === COLOUR SWATCHES === */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+    .swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid rgba(31,27,22,0.12);
+      background: var(--cloud);
+      display: flex;
+      flex-direction: column;
+    }
+    .swatch__chip {
+      height: 130px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-sm);
+    }
+    .swatch__hex {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-bold);
+      letter-spacing: 0.04em;
+    }
+    .swatch__body {
+      padding: var(--space-sm) var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .swatch__name {
+      font-size: var(--text-body);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-heading);
+    }
+    .swatch__role {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-semibold);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .swatch__values {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--ink-soft);
+      margin-top: 4px;
+    }
+    .swatch__use {
+      font-size: var(--text-caption);
+      line-height: var(--lead-relaxed);
+      color: var(--ink);
+      margin-top: var(--space-xs);
+    }
+    .swatch__use strong { font-weight: var(--weight-bold); }
+
+    /* === COLOUR PAIRINGS === */
+    .pairings {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-sm);
+      margin-block: var(--space-md);
+    }
+    .pair {
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-height: 130px;
+      justify-content: space-between;
+    }
+    .pair__sample {
+      font-size: var(--text-heading);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-heading);
+      line-height: 1.1;
+    }
+    .pair__meta {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+    .pair__verdict {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-bold);
+      font-variant-numeric: tabular-nums;
+    }
+    .pair--pass { box-shadow: inset 0 0 0 2px var(--doc-pass-ink); }
+    .pair--fail-small { box-shadow: inset 0 0 0 2px var(--coral-deep); }
+
+    /* === TYPE SCALE PREVIEW === */
+    .type-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 220px) 1fr;
+      gap: var(--space-md);
+      align-items: baseline;
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid rgba(31,27,22,0.08);
+    }
+    .type-row__meta {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .type-row__name {
+      font-family: var(--font-family);
+      font-size: var(--text-body);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-heading);
+      color: var(--ink);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .type-row__sample { color: var(--ink); }
+
+    /* === SPACING SCALE === */
+    .spacing-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin-block: var(--space-md);
+    }
+    .spacing-row {
+      display: grid;
+      grid-template-columns: 100px 80px 1fr;
+      gap: var(--space-md);
+      align-items: center;
+    }
+    .spacing-row__name {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-bold);
+    }
+    .spacing-row__value {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--ink-soft);
+    }
+    .spacing-row__bar {
+      height: 18px;
+      background: var(--ink);
+      border-radius: 4px;
+    }
+
+    /* === ASSET GRID === */
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+    .asset {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid rgba(31,27,22,0.12);
+      background: var(--cloud);
+    }
+    .asset__thumb {
+      aspect-ratio: 1 / 1;
+      background: var(--cloud-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .asset__thumb--sun { background: var(--sun); }
+    .asset__thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .asset__body {
+      padding: var(--space-sm) var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .asset__file {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-bold);
+      color: var(--ink);
+      word-break: break-all;
+    }
+    .asset__desc {
+      font-size: var(--text-caption);
+      line-height: var(--lead-relaxed);
+      color: var(--ink-soft);
+      margin-top: 6px;
+    }
+    .asset__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: var(--space-2xs);
+    }
+    .tag {
+      font-size: 10px;
+      font-weight: var(--weight-extrabold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: var(--radius-pill);
+      background: rgba(31,27,22,0.08);
+      color: var(--ink);
+    }
+    .tag--bg-sun { background: var(--sun); color: var(--ink); }
+    .tag--bg-trans { background: rgba(91, 169, 245, 0.18); color: var(--doc-trans-ink); }
+    .tag--has-4x { background: var(--doc-pass-ink); color: var(--cloud); }
+
+    /* === CODE BLOCK (templates) === */
+    pre.code {
+      background: var(--ink);
+      color: var(--cloud);
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      line-height: 1.65;
+      overflow-x: auto;
+      margin-block: var(--space-md);
+      tab-size: 2;
+    }
+    pre.code .accent { color: var(--sun); font-weight: 600; }
+    code.inline {
+      background: rgba(31,27,22,0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.875em;
+    }
+
+    /* === TABLES === */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-block: var(--space-md);
+      font-size: var(--text-body);
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(31,27,22,0.12);
+      vertical-align: top;
+    }
+    th {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      background: var(--cloud-deep);
+    }
+    td code.inline {
+      font-size: 0.8125rem;
+    }
+
+    /* === NUMBERED CHECKLIST === */
+    ol.checklist {
+      counter-reset: cl;
+      padding: 0;
+      margin-block: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    ol.checklist > li {
+      counter-increment: cl;
+      list-style: none;
+      padding: var(--space-sm) var(--space-md) var(--space-sm) calc(var(--space-md) + 28px);
+      border-radius: var(--radius-sm);
+      background: var(--cloud-deep);
+      position: relative;
+      font-size: var(--text-body);
+      line-height: var(--lead-relaxed);
+    }
+    ol.checklist > li::before {
+      content: counter(cl);
+      position: absolute;
+      left: 14px;
+      top: var(--space-sm);
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-pill);
+      background: var(--ink);
+      color: var(--cloud);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-extrabold);
+      display: grid;
+      place-items: center;
+    }
+    ol.checklist > li strong { font-weight: var(--weight-bold); }
+
+    /* === STAGE PIPELINE DIAGRAM === */
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-sm);
+      margin-block: var(--space-md);
+    }
+    .stage {
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      background: var(--cloud-deep);
+      border: 2px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-height: 180px;
+      position: relative;
+    }
+    .stage:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      font-weight: var(--weight-extrabold);
+      color: var(--ink);
+      z-index: 1;
+    }
+    .stage__num {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      font-weight: var(--weight-bold);
+      color: var(--ink-soft);
+    }
+    .stage__name {
+      font-size: var(--text-title);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-heading);
+    }
+    .stage__path {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--ink-soft);
+      margin-top: 2px;
+    }
+    .stage__desc {
+      font-size: var(--text-caption);
+      line-height: var(--lead-relaxed);
+      margin-top: var(--space-2xs);
+    }
+    @media (max-width: 900px) {
+      .pipeline { grid-template-columns: 1fr 1fr; }
+      .stage:nth-child(2)::after { display: none; }
+    }
+    @media (max-width: 540px) {
+      .pipeline { grid-template-columns: 1fr; }
+      .stage::after { display: none; }
+    }
+
+    /* === DRIFT CHECK ROW === */
+    .drift-check {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid rgba(31,27,22,0.08);
+      align-items: baseline;
+    }
+    .drift-check:last-of-type { border-bottom: 0; }
+    @media (max-width: 540px) {
+      .drift-check { grid-template-columns: 1fr; gap: 4px; }
+    }
+    .drift-check__name {
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-heading);
+    }
+    .drift-check__rule {
+      font-size: var(--text-body);
+      line-height: var(--lead-relaxed);
+      color: var(--ink-soft);
+      font-weight: var(--weight-medium);
+    }
+    .drift-check__rule strong { color: var(--ink); font-weight: var(--weight-bold); }
+
+    /* === USAGE MAP TABLE === */
+    .usage-map td:nth-child(1) {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: var(--weight-bold);
+      white-space: nowrap;
+    }
+    .usage-map td:nth-child(4) { color: var(--ink-soft); font-size: var(--text-caption); }
+
+    /* === COMPONENT SHOWCASE === */
+    .component {
+      margin-bottom: var(--space-2xl);
+    }
+    .component__header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      align-items: baseline;
+      margin-bottom: var(--space-sm);
+    }
+    .component__name {
+      font-size: var(--text-heading);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-heading);
+    }
+    .component__class {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--ink-soft);
+      background: var(--cloud-deep);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+    }
+    .component__demo {
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      background: var(--cloud);
+      border: 1px solid rgba(31,27,22,0.12);
+      margin-block: var(--space-sm);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      align-items: center;
+    }
+    .component__demo--sun { background: var(--sun); border-color: var(--sun-deep); }
+    .component__notes {
+      font-size: var(--text-body);
+      line-height: var(--lead-relaxed);
+      color: var(--ink-soft);
+      max-width: 65ch;
+      font-weight: var(--weight-medium);
+    }
+    .component__notes strong { color: var(--ink); font-weight: var(--weight-bold); }
+
+    /* === LIVE COMPONENTS (used inside the demo blocks) === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 24px;
+      border-radius: var(--radius-pill);
+      font-weight: var(--weight-bold);
+      font-size: var(--text-body);
+      text-align: center;
+      white-space: nowrap;
+      transition: transform 200ms ease, background-color 200ms ease;
+      cursor: pointer;
+      border: 0;
+    }
+    .btn--ink { background: var(--ink); color: var(--cloud); }
+    .btn--block { display: flex; width: 100%; }
+    .btn--square { border-radius: 14px; padding: 14px 22px; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(1px); }
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--cloud), 0 0 0 6px var(--coral-deep);
+    }
+    .btn--disabled, .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(31, 27, 22, 0.08);
+      border-radius: var(--radius-pill);
+      padding: 8px 14px;
+      font-size: var(--text-label);
+      font-weight: var(--weight-semibold);
+      color: var(--ink);
+    }
+    .badge__dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background: var(--coral);
+    }
+    .pill {
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      font-weight: var(--weight-extrabold);
+      font-size: var(--text-caption);
+    }
+    .pill--ink { background: var(--ink); color: var(--cloud); }
+    .link-demo {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: var(--weight-semibold);
+      font-size: var(--text-body);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      color: var(--ink);
+    }
+    .link-demo:hover { color: var(--coral-deep); }
+
+    .plan {
+      background: var(--cloud);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      max-width: 360px;
+      width: 100%;
+    }
+    .plan__price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .plan__amount {
+      font-size: var(--text-display-lg);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-display);
+      font-variant-numeric: tabular-nums;
+    }
+    .plan__period {
+      font-size: var(--text-lead);
+      color: var(--ink-soft);
+      font-weight: var(--weight-semibold);
+    }
+    .plan__features {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .plan__features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: var(--text-body);
+      font-weight: var(--weight-medium);
+    }
+    .check {
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-pill);
+      background: var(--sun);
+      font-weight: var(--weight-extrabold);
+      font-size: var(--text-caption);
+      flex-shrink: 0;
+      color: var(--ink);
+    }
+
+    .stats-demo {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      background: var(--sun);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      width: 100%;
+    }
+    .stats-demo__cell {
+      padding: 20px 24px;
+      border-right: 1px solid var(--sun-deep);
+      display: flex;
+      flex-direction: column;
+    }
+    .stats-demo__cell:last-child { border-right: 0; }
+    .stats-demo__label {
+      font-size: var(--text-label);
+      font-weight: var(--weight-semibold);
+      opacity: 0.7;
+    }
+    .stats-demo__value {
+      font-size: var(--text-heading);
+      font-weight: var(--weight-extrabold);
+      letter-spacing: var(--track-heading);
+      font-variant-numeric: tabular-nums;
+      margin-top: 6px;
+      line-height: 1;
+    }
+
+    /* === STICKER OUTLINE EXAMPLE === */
+    .sticker-demo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-block: var(--space-md);
+    }
+    .sticker-demo__panel {
+      background: var(--sun);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .sticker-demo__panel img {
+      width: 70%;
+      height: auto;
+    }
+    .sticker-demo__caption {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--track-eyebrow);
+      text-transform: uppercase;
+      margin-top: var(--space-2xs);
+    }
+    .sticker-demo__caption--bad { color: var(--coral-deep); }
+    .sticker-demo__caption--good { color: #1B7C3F; }
+    @media (max-width: 540px) {
+      .sticker-demo { grid-template-columns: 1fr; }
+    }
+
+    /* === MOBILE === */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--sun-deep);
+      }
+      .sidebar__sticky {
+        position: static;
+        max-height: none;
+        overflow: visible;
+      }
+      .main { padding: 32px var(--pad-x) 64px; }
+    }
+
+    /* === REDUCED MOTION === */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="layout">
+
+  <aside class="sidebar" aria-label="Style guide navigation">
+    <div class="sidebar__sticky">
+      <div class="brand">
+        <img class="brand__bird" src="character/01-canonical/bandit-ref-single-transparent.png" alt="" aria-hidden="true" />
+        <span class="brand__name">Panicbudgie</span>
+        <span class="brand__tag">Style guide · v1</span>
+      </div>
+      <nav class="nav" aria-label="Sections">
+        <a href="#foundations"><span class="nav__num">1</span><span>Brand foundations</span></a>
+        <a href="#colour"><span class="nav__num">2</span><span>Colour system</span></a>
+        <a href="#typography"><span class="nav__num">3</span><span>Typography</span></a>
+        <a href="#spacing"><span class="nav__num">4</span><span>Spacing &amp; layout</span></a>
+        <a href="#bandit"><span class="nav__num">5</span><span>Bandit character</span></a>
+        <a href="#firefly"><span class="nav__num">6</span><span>Firefly workflow</span></a>
+        <a href="#voice"><span class="nav__num">7</span><span>Voice &amp; copy</span></a>
+        <a href="#components"><span class="nav__num">8</span><span>Component library</span></a>
+      </nav>
+    </div>
+  </aside>
+
+  <main class="main" id="main" tabindex="-1">
+
+    <header class="page-head">
+      <span class="eyebrow">Panicbudgie · Brand &amp; Mascot Style Guide</span>
+      <h1>Daylight, not alarm.</h1>
+      <p class="dek">The single source of truth for Panicbudgie identity, character, and copy. Every value here was extracted from the production codebase (<code class="inline">src/styles.css</code>, <code class="inline">src/index.html</code>) or the project bible (<code class="inline">character/startup_3.md</code>). <strong>This is a prescriptive document. If a rule is here, follow it. If it isn't here, it isn't a rule yet.</strong></p>
+      <picture>
+        <img class="page-head__bird" src="character/03-final-assets/marketing/hero-pressing-button.png" alt="" aria-hidden="true" loading="eager" />
+      </picture>
+    </header>
+
+    <!-- ===== SECTION 1 ===== -->
+    <section id="foundations">
+      <div class="section__head">
+        <span class="section__num">01</span>
+        <h2>Brand foundations</h2>
+      </div>
+      <p class="section__intro">Panicbudgie sells competence and earns trust. Every other brand in the South African emergency-response category trades on fear. This brand does the opposite, on purpose. The mission, the personality, and the register all point at the same thing: <strong>calm capability that makes the worst moment feel handled.</strong></p>
+
+      <h3>Mission</h3>
+      <p>Press once. A real responder is on the way. R149 a month, whole household. Built-in R10,000 medical benefit.</p>
+      <p style="color: var(--ink-soft); margin-top: 8px; font-size: var(--text-caption);">Source: <code class="inline">src/index.html</code> meta description.</p>
+
+      <h3>Brand personality · four adjectives</h3>
+
+      <h4>Calm</h4>
+      <p style="color: var(--ink-soft);">The brand never shouts. Steady tone, measured pace, no exclamation marks.</p>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">In action</div>
+          <div class="do-dont__example">"Three things happen. After the first, we take it from there."</div>
+          <div class="do-dont__caption">Three short sentences. No urgency adjectives. The structure does the reassurance.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Violation</div>
+          <div class="do-dont__example">"DON'T PANIC! In an emergency every second counts!!"</div>
+          <div class="do-dont__caption">Caps + exclamations + fear language. Reads as alarm, which is the brand's anti-reference.</div>
+        </div>
+      </div>
+
+      <h4>Capable</h4>
+      <p style="color: var(--ink-soft);">Specific numbers, transparent process, real infrastructure shown.</p>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">In action</div>
+          <div class="do-dont__example">"27 314 responders on shift across 9 562 vehicles."</div>
+          <div class="do-dont__caption">Real numbers, no hedging. The competence statement is the proof, not a promise.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Violation</div>
+          <div class="do-dont__example">"Trusted by thousands of South Africans. Best in class."</div>
+          <div class="do-dont__caption">Vague superlatives, no proof. Reads as marketing fluff, the opposite of capable.</div>
+        </div>
+      </div>
+
+      <h4>Reliable</h4>
+      <p style="color: var(--ink-soft);">Promises stay small and concrete. Live tracking, named responders, no caveats hiding in fine print.</p>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">In action</div>
+          <div class="do-dont__example">"Live ETA on the map. The responder's name and photo on the screen."</div>
+          <div class="do-dont__caption">Two specific affordances. Both visible. Both verifiable.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Violation</div>
+          <div class="do-dont__example">"Subject to availability. Terms apply."</div>
+          <div class="do-dont__caption">Compliance hedging at the moment a member needs certainty. Banned per the Plain-Language Rule.</div>
+        </div>
+      </div>
+
+      <h4>Warm</h4>
+      <p style="color: var(--ink-soft);">A character carries the warmth that bold colour alone cannot. Bandit is the loyal, level-headed friend, not a logo mark.</p>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">In action</div>
+          <div class="do-dont__example">"Hold one second so it's deliberate."</div>
+          <div class="do-dont__caption">Operational instruction wrapped in human voice. Texts like a friend, not a manual.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Violation</div>
+          <div class="do-dont__example">"Activation requires sustained input of 1,000ms or longer."</div>
+          <div class="do-dont__caption">Spec-speak. Loses every member who isn't an engineer.</div>
+        </div>
+      </div>
+
+      <h3>Brand register · two modes</h3>
+      <p>Marketing and product surfaces share the same identity but use it differently. <strong>Marketing surfaces declare the brand. Product surfaces serve the task.</strong></p>
+
+      <h4>Marketing register</h4>
+      <p>Bold, reassuring, direct. The brand wears Sun. Bandit appears at scale. Type is large and confident. Headlines are fragments. Copy lands a single idea per moment.</p>
+      <p><strong>When to use:</strong> homepage, landing pages, partner-marketing pages, hero sections, "join the flock" surfaces, anything pre-acquisition.</p>
+
+      <h4>Product register</h4>
+      <p>Calm, clear, functional. Surfaces lean Cloud, not Sun. Sun appears as accent. Bandit appears at smaller scale, anchoring states (empty, success, listening, sleeping). Copy is operational: short imperatives, named UI elements, no flourish.</p>
+      <p><strong>When to use:</strong> in-app screens, settings, notifications, member dashboard, in-emergency states, real-time tracking.</p>
+
+      <div class="rule">
+        <div class="rule__label">Register rule</div>
+        <div class="rule__body">If a surface comes before a member commits, it's marketing. If it comes after, it's product. Don't put marketing-register copy on a settings page. Don't put product-register restraint on the homepage hero.</div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2 ===== -->
+    <section id="colour">
+      <div class="section__head">
+        <span class="section__num">02</span>
+        <h2>Colour system</h2>
+      </div>
+      <p class="section__intro">Twelve colour tokens, four named roles. The strategy is <strong>Committed</strong>: Sun carries 30 to 60 percent of the brand surface. Coral is held back for the moments that earn it. Cloud is the body neutral. Ink is type.</p>
+
+      <h3>The full palette</h3>
+      <div class="swatch-grid">
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--sun);"><span class="swatch__hex" style="color: var(--ink);">#F2B705</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Primary · Brand surface</span>
+            <span class="swatch__name">Sun · Budgie Yellow</span>
+            <span class="swatch__values">rgb(242, 183, 5) · oklch(81% 0.16 84)</span>
+            <p class="swatch__use"><strong>Use for:</strong> hero, nav, How-it-works, pricing surfaces, brand-identity moments. <strong>Do not:</strong> use as a destructive or warning colour. Sun signals optimism, not urgency.</p>
+            <p class="swatch__use" style="color: var(--ink-soft);"><strong>Contrast:</strong> Ink on Sun → 9.42:1 (AAA). Ink-soft on Sun → 4.24:1 (fails AA for normal text).</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--sun-deep);"><span class="swatch__hex" style="color: var(--ink);">#E0A800</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Primary · Sun shadow</span>
+            <span class="swatch__name">Sun-deep</span>
+            <span class="swatch__values">rgb(224, 168, 0)</span>
+            <p class="swatch__use"><strong>Use for:</strong> 1px dividers between cells on Sun-coloured surfaces (the stats grid uses this). <strong>Do not:</strong> use as a fill on its own surface. It exists as a structural rule, not a brand colour.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--coral);"><span class="swatch__hex" style="color: var(--ink);">#FF6A3D</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Secondary · Panic signal</span>
+            <span class="swatch__name">Coral · Panic Coral</span>
+            <span class="swatch__values">rgb(255, 106, 61)</span>
+            <p class="swatch__use"><strong>Use for:</strong> the panic action, live-emergency states, breathing live indicators (badge dot). <strong>Do not:</strong> use as a decorative accent, hover colour, chip background, or section divider. <strong>Its rarity is its meaning.</strong></p>
+            <p class="swatch__use" style="color: var(--ink-soft);"><strong>Contrast:</strong> Coral on Cloud → ~3.0:1. Use Coral-deep for any text rendering instead.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--coral-deep);"><span class="swatch__hex" style="color: var(--cloud);">#B73B11</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Secondary · Panic text</span>
+            <span class="swatch__name">Coral-deep</span>
+            <span class="swatch__values">rgb(183, 59, 17)</span>
+            <p class="swatch__use"><strong>Use for:</strong> all coral-tinted text. Eyebrows, focus rings, in-copy emphasis like "We've already paid it." <strong>Do not:</strong> use Coral (light) for text. Coral-deep is the WCAG AA-safe pair.</p>
+            <p class="swatch__use" style="color: var(--ink-soft);"><strong>Contrast:</strong> Coral-deep on Cloud → 5.08:1 (AA). Coral-deep on Sun → 3.17:1 (AA-large only).</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--blossom);"><span class="swatch__hex" style="color: var(--ink);">#FFC8DD</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Tertiary · Character warmth</span>
+            <span class="swatch__name">Blossom</span>
+            <span class="swatch__values">rgb(255, 200, 221)</span>
+            <p class="swatch__use"><strong>Use for:</strong> Bandit's cheek dots, the pink in his tail gradient, character-warmth surfaces, "looked after" emotional states. <strong>Do not:</strong> use as a UI fill outside character contexts.</p>
+            <p class="swatch__use" style="color: var(--ink-soft);">Defined as a token, currently shipped only inside character art.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--sky);"><span class="swatch__hex" style="color: var(--ink);">#5BA9F5</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Tertiary · Trust + tracking</span>
+            <span class="swatch__name">Sky-Blue</span>
+            <span class="swatch__values">rgb(91, 169, 245)</span>
+            <p class="swatch__use"><strong>Use for:</strong> live-tracking surfaces, "responder dispatched" status, "all clear" confirmations, trust signals. <strong>Do not:</strong> use as a brand surface. Sky is a status colour.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--cloud);"><span class="swatch__hex" style="color: var(--ink);">#FAF3E4</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Neutral · Body surface</span>
+            <span class="swatch__name">Cloud · Warm white</span>
+            <span class="swatch__values">rgb(250, 243, 228)</span>
+            <p class="swatch__use"><strong>Use for:</strong> body backgrounds in product register, neutral content surfaces, the budgie's body colour in illustration. <strong>Do not:</strong> use <code class="inline">#fff</code>. Pure white is banned.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--cloud-deep);"><span class="swatch__hex" style="color: var(--ink);">#F2E8D2</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Neutral · Body shadow</span>
+            <span class="swatch__name">Cloud-deep</span>
+            <span class="swatch__values">rgb(242, 232, 210)</span>
+            <p class="swatch__use"><strong>Use for:</strong> tonal layering on Cloud surfaces (test-call section), subtle dividers, callout backgrounds. <strong>Do not:</strong> use as a brand surface. Cloud-deep is structural, not declarative.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--ink);"><span class="swatch__hex" style="color: var(--cloud);">#1F1B16</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Neutral · Type</span>
+            <span class="swatch__name">Ink · Warm charcoal</span>
+            <span class="swatch__values">rgb(31, 27, 22)</span>
+            <p class="swatch__use"><strong>Use for:</strong> all body type, primary buttons, the partners strip, navigation rails. <strong>Do not:</strong> use <code class="inline">#000</code>. Pure black is banned.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--ink-soft);"><span class="swatch__hex" style="color: var(--cloud);">#5C5147</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Neutral · Soft type</span>
+            <span class="swatch__name">Ink-soft</span>
+            <span class="swatch__values">rgb(92, 81, 71)</span>
+            <p class="swatch__use"><strong>Use for:</strong> secondary body copy on Cloud (medical, testcall), metadata, captions. <strong>Do not:</strong> use on Sun. Contrast on Sun is 4.24:1, fails WCAG AA for normal text.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--ink-2);"><span class="swatch__hex" style="color: var(--cloud);">#2A241D</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Neutral · Ink layer 2</span>
+            <span class="swatch__name">Ink-2</span>
+            <span class="swatch__values">rgb(42, 36, 29)</span>
+            <p class="swatch__use"><strong>Use for:</strong> map / device-mock backgrounds (test-call section uses a 45° stripe of ink-2 + ink-3). <strong>Do not:</strong> use as a body-text colour. Ink-2 is decorative.</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch__chip" style="background: var(--ink-3);"><span class="swatch__hex" style="color: var(--cloud);">#322C24</span></div>
+          <div class="swatch__body">
+            <span class="swatch__role">Neutral · Ink layer 3</span>
+            <span class="swatch__name">Ink-3</span>
+            <span class="swatch__values">rgb(50, 44, 36)</span>
+            <p class="swatch__use"><strong>Use for:</strong> the alternating stripe with Ink-2. <strong>Do not:</strong> use anywhere else.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <h3>Approved colour pairings</h3>
+      <p style="color: var(--ink-soft); margin-bottom: var(--space-md);">All ratios computed via WCAG 2.1 relative luminance. AA = 4.5:1 normal, 3:1 large. AAA = 7:1 normal, 4.5:1 large. <strong>Large text</strong> = 18pt+, or 14pt+ bold.</p>
+
+      <div class="pairings">
+        <div class="pair pair--pass" style="background: var(--cloud); color: var(--ink);">
+          <span class="pair__sample">Ink on Cloud</span>
+          <span class="pair__meta">Body text · primary</span>
+          <span class="pair__verdict">17.0:1 · AAA</span>
+        </div>
+        <div class="pair pair--pass" style="background: var(--sun); color: var(--ink);">
+          <span class="pair__sample">Ink on Sun</span>
+          <span class="pair__meta">Headlines · nav · CTAs</span>
+          <span class="pair__verdict">9.4:1 · AAA</span>
+        </div>
+        <div class="pair pair--pass" style="background: var(--ink); color: var(--cloud);">
+          <span class="pair__sample">Cloud on Ink</span>
+          <span class="pair__meta">Inverse · partners strip · primary button</span>
+          <span class="pair__verdict">15.5:1 · AAA</span>
+        </div>
+        <div class="pair pair--pass" style="background: var(--cloud); color: var(--coral-deep);">
+          <span class="pair__sample">Coral-deep on Cloud</span>
+          <span class="pair__meta">Eyebrows · in-copy emphasis</span>
+          <span class="pair__verdict">5.1:1 · AA</span>
+        </div>
+        <div class="pair pair--pass" style="background: var(--cloud); color: var(--ink-soft);">
+          <span class="pair__sample">Ink-soft on Cloud</span>
+          <span class="pair__meta">Secondary body · captions</span>
+          <span class="pair__verdict">7.0:1 · AA, near AAA</span>
+        </div>
+        <div class="pair pair--fail-small" style="background: var(--sun); color: var(--coral-deep);">
+          <span class="pair__sample">Coral-deep on Sun</span>
+          <span class="pair__meta">Large text only · forbidden for body</span>
+          <span class="pair__verdict">3.2:1 · AA-large only</span>
+        </div>
+        <div class="pair pair--fail-small" style="background: var(--sun); color: var(--ink-soft);">
+          <span class="pair__sample">Ink-soft on Sun</span>
+          <span class="pair__meta">Forbidden · use Ink instead</span>
+          <span class="pair__verdict">4.2:1 · fails AA</span>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule__label">The Daylight Rule</div>
+        <div class="rule__body">The brand surface defaults to <strong>Sun</strong>, not white. White-on-white is for high-density product surfaces only. The website's identity is the daylight; lean into it.</div>
+      </div>
+      <div class="rule">
+        <div class="rule__label">The One Coral Rule</div>
+        <div class="rule__body">Coral is reserved <strong>exclusively</strong> for the panic action and live-emergency states. It is never a decorative accent, never a hover colour, never a chip background, never a section divider. <strong>Its rarity is its meaning.</strong> If a button uses Coral and isn't a panic button, it's wrong.</div>
+      </div>
+      <div class="rule">
+        <div class="rule__label">The No-Garish-Strays Rule</div>
+        <div class="rule__body">The previous Panicbudgie site's stray colours (olive <code class="inline">#556b2f</code>, teal <code class="inline">#3b8183</code>, gold <code class="inline">#b8860b</code>) are gone. They never belonged. <strong>If a colour isn't in the twelve roles above, it doesn't ship.</strong> The single exception is Sun-halo (<code class="inline">#FDCB0E</code>), used inside the pricing-section text-shadow halo to keep type readable over the flock background.</div>
+      </div>
+
+      <h3>The yellow-on-yellow problem</h3>
+      <p>Bandit is yellow. The brand surface is yellow. Without a treatment, the character disappears into the background. <strong>The solution is the sticker-style white outline,</strong> already baked into the canonical character render. Always place Bandit as a sticker on Sun; never recompose him without the outline.</p>
+
+      <div class="sticker-demo">
+        <div>
+          <div class="sticker-demo__panel">
+            <img src="character/03-final-assets/marketing/hero-pressing-button.png" alt="Bandit pressing the panic button on Sun yellow, with the sticker white outline that keeps him readable" />
+          </div>
+          <p class="sticker-demo__caption sticker-demo__caption--good">Do · Sticker outline keeps the character readable on Sun</p>
+        </div>
+        <div>
+          <div class="sticker-demo__panel" style="background: var(--cloud);">
+            <img src="character/03-final-assets/marketing/hero-pressing-button.png" alt="Bandit on a Cloud surface, where the sticker outline is invisible because contrast against the lighter background isn't needed" />
+          </div>
+          <p class="sticker-demo__caption sticker-demo__caption--good">Do · On Cloud, the outline is invisible. That's fine.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3 ===== -->
+    <section id="typography">
+      <div class="section__head">
+        <span class="section__num">03</span>
+        <h2>Typography</h2>
+      </div>
+      <p class="section__intro">One family for both display and body: <strong>Onest</strong>. Variable font, served from Google Fonts. Five shipped weights: 400, 500, 600, 700, 800. Body never goes below 16px on mobile. Display goes up to 108px in the hero.</p>
+
+      <h3>Family</h3>
+      <table>
+        <thead><tr><th>Role</th><th>Family</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Display + body</td><td>Onest</td><td>Google Fonts · <code class="inline">family=Onest:wght@400;500;600;700;800</code></td></tr>
+          <tr><td>Mono (debug only)</td><td>System mono stack</td><td><code class="inline">ui-monospace, "SF Mono", "JetBrains Mono", Menlo</code></td></tr>
+          <tr><td>Fallback</td><td>System sans</td><td><code class="inline">system-ui, -apple-system, "Segoe UI", sans-serif</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Type scale · rendered at production sizes</h3>
+      <p style="color: var(--ink-soft); font-size: var(--text-caption); margin-bottom: var(--space-md);">Samples below are rendered slightly scaled-down so each fits inside the two-column documentation grid. The metadata column lists the exact production clamp ranges.</p>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Display XL</span>
+          clamp(4.5rem, 8.25vw, 6.75rem)<br />72 → 108px<br />weight 800 · tight 0.95<br />tracking −0.025em<br />Hero h1 only
+        </div>
+        <div class="type-row__sample" style="font-size: clamp(3.5rem, 7vw, 5.5rem); font-weight: 800; letter-spacing: -0.025em; line-height: 0.95;">Help is one press away.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Display Large</span>
+          clamp(3.5rem, 6vw, 4.5rem)<br />56 → 72px<br />weight 800 · snug 1.05<br />Section h2 (large)
+        </div>
+        <div class="type-row__sample" style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.025em; line-height: 1.05;">Three things happen.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Display</span>
+          clamp(2.5rem, 4vw, 3rem)<br />40 → 48px<br />weight 800 · snug 1.05<br />Section h2 (default)
+        </div>
+        <div class="type-row__sample" style="font-size: clamp(2rem, 3.5vw, 2.75rem); font-weight: 800; letter-spacing: -0.025em; line-height: 1.05;">A network already on the road.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Heading</span>
+          clamp(1.75rem, 2.8vw, 2rem)<br />28 → 32px<br />weight 800 · normal 1.2<br />h3 / step titles
+        </div>
+        <div class="type-row__sample" style="font-size: clamp(1.5rem, 2.5vw, 1.875rem); font-weight: 800; letter-spacing: -0.015em; line-height: 1.2;">You press.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Title</span>
+          clamp(1.375rem, 1.6vw, 1.5rem)<br />22 → 24px<br />weight 700 · normal 1.2<br />h4 · lede
+        </div>
+        <div class="type-row__sample" style="font-size: 1.4rem; font-weight: 700; letter-spacing: -0.015em; line-height: 1.2;">27 314 responders on shift across 9 562 vehicles.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Lead</span>
+          clamp(1.125rem, 1.2vw, 1.25rem)<br />18 → 20px<br />weight 500 · relaxed 1.55<br />Lead paragraphs
+        </div>
+        <div class="type-row__sample" style="font-size: 1.15rem; font-weight: 500; line-height: 1.55;">Press the button. We dispatch a real responder in seconds. You watch them arrive on a map. That's the whole product.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Body</span>
+          1rem · 16px<br />weight 400 · relaxed 1.55<br />The 16px floor
+        </div>
+        <div class="type-row__sample" style="font-size: 1rem; font-weight: 400; line-height: 1.55;">On the app, on a panic button, or by saying "hey budgie" to a paired speaker. Hold one second so it's deliberate.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Label</span>
+          0.875rem · 14px<br />weight 700 · tracking 0.12em<br />uppercase · eyebrows
+        </div>
+        <div class="type-row__sample" style="font-size: 0.875rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral-deep);">The real difference</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__meta">
+          <span class="type-row__name">Caption</span>
+          0.75rem · 12px<br />weight 500 · fine print<br />Only on Cloud
+        </div>
+        <div class="type-row__sample" style="font-size: 0.75rem; font-weight: 500; color: var(--ink-soft);">Built for South African households, offered by the institutions that already serve them.</div>
+      </div>
+
+      <div class="rule">
+        <div class="rule__label">The 16px Floor Rule</div>
+        <div class="rule__body">Body text never goes below 16px on mobile. Older readers, stress reading, low-light all override aesthetic preferences for tighter typography. <strong>Smaller is wrong.</strong></div>
+      </div>
+      <div class="rule">
+        <div class="rule__label">The No-Thin-Weight Rule</div>
+        <div class="rule__body">Body and small-size text never use weights below 400. Weights 100, 200, 300 are not loaded in production. Light treatments at large display sizes only.</div>
+      </div>
+
+      <h3>Headline pattern</h3>
+      <p>Headlines are <strong>fragments, sentence case, present tense</strong>. They land one idea, end on a period (or no terminator), and never use exclamation marks.</p>
+
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">Write like this</div>
+          <div class="do-dont__example" style="font-size: 1.25rem; font-weight: 800; line-height: 1.1;">Help is one press away.</div>
+          <div class="do-dont__caption">Five words, one idea, period. Sentence case. The structure is the voice.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Not like this</div>
+          <div class="do-dont__example" style="font-size: 1.25rem; font-weight: 800; line-height: 1.1;">REVOLUTIONIZE Your Family's Safety With Innovative Emergency Response!</div>
+          <div class="do-dont__caption">Caps, title case, vague verbs, exclamation, jargon ("revolutionize"). Pure AI slop. Nothing landed.</div>
+        </div>
+      </div>
+
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">Write like this</div>
+          <div class="do-dont__example" style="font-size: 1.125rem; font-weight: 800; line-height: 1.15;">You arrive at the hospital. They ask for a deposit. We've already paid it.</div>
+          <div class="do-dont__caption">Three short sentences. Concrete moment, concrete action, concrete answer.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Not like this</div>
+          <div class="do-dont__example" style="font-size: 1.125rem; font-weight: 800; line-height: 1.15;">Comprehensive Hospital Coverage Solutions for the Modern Household</div>
+          <div class="do-dont__caption">Title case, abstract nouns, "solutions", insurance vocabulary. Banned by the Plain-Language Rule.</div>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule__label">Headline pattern · summary</div>
+        <div class="rule__body">Sentence case. Present tense. One idea. Five to twelve words. End with a period or nothing. Never an exclamation. Never title case. Never "solutions", "comprehensive", "innovative".</div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4 ===== -->
+    <section id="spacing">
+      <div class="section__head">
+        <span class="section__num">04</span>
+        <h2>Spacing &amp; layout</h2>
+      </div>
+      <p class="section__intro">Two scales: <strong>token-based spacing</strong> for component-level rhythm, <strong>fluid section padding</strong> for vertical breath. The base unit is 4px. Sections breathe deliberately. Same padding everywhere is monotony.</p>
+
+      <h3>Spacing scale · component rhythm</h3>
+      <div class="spacing-stack">
+        <div class="spacing-row"><span class="spacing-row__name">--space-3xs</span><span class="spacing-row__value">4px</span><span class="spacing-row__bar" style="width: 4px;"></span></div>
+        <div class="spacing-row"><span class="spacing-row__name">--space-2xs</span><span class="spacing-row__value">8px</span><span class="spacing-row__bar" style="width: 8px;"></span></div>
+        <div class="spacing-row"><span class="spacing-row__name">--space-xs</span><span class="spacing-row__value">12px</span><span class="spacing-row__bar" style="width: 12px;"></span></div>
+        <div class="spacing-row"><span class="spacing-row__name">--space-sm</span><span class="spacing-row__value">16px</span><span class="spacing-row__bar" style="width: 16px;"></span></div>
+        <div class="spacing-row"><span class="spacing-row__name">--space-md</span><span class="spacing-row__value">24px</span><span class="spacing-row__bar" style="width: 24px;"></span></div>
+        <div class="spacing-row"><span class="spacing-row__name">--space-lg</span><span class="spacing-row__value">40px</span><span class="spacing-row__bar" style="width: 40px;"></span></div>
+        <div class="spacing-row"><span class="spacing-row__name">--space-xl</span><span class="spacing-row__value">64px</span><span class="spacing-row__bar" style="width: 64px;"></span></div>
+        <div class="spacing-row"><span class="spacing-row__name">--space-2xl</span><span class="spacing-row__value">96px</span><span class="spacing-row__bar" style="width: 96px;"></span></div>
+        <div class="spacing-row"><span class="spacing-row__name">--space-3xl</span><span class="spacing-row__value">128px</span><span class="spacing-row__bar" style="width: 128px;"></span></div>
+      </div>
+
+      <h3>Section padding · vertical breath</h3>
+      <table>
+        <thead><tr><th>Token</th><th>Range</th><th>Used in</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">--pad-section-tight</code></td><td>clamp(48px, 7vw, 80px)</td><td>Network section (long with map background)</td></tr>
+          <tr><td><code class="inline">--pad-section-normal</code></td><td>clamp(64px, 10vw, 120px)</td><td>How-it-works, test-call, partners</td></tr>
+          <tr><td><code class="inline">--pad-section-loose</code></td><td>clamp(96px, 14vw, 160px)</td><td>Medical, pricing (the "moment" sections)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Container, breakpoints, radii</h3>
+      <table>
+        <thead><tr><th>Token</th><th>Value</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">--max-width</code></td><td>1280px</td><td>Container cap. Page never exceeds this width.</td></tr>
+          <tr><td><code class="inline">--pad-x</code></td><td>clamp(24px, 5vw, 64px)</td><td>Horizontal page gutter.</td></tr>
+          <tr><td><code class="inline">--radius-sm</code></td><td>12px</td><td>Small surfaces, callouts.</td></tr>
+          <tr><td><code class="inline">--radius-md</code></td><td>16px</td><td>Cards, device-mock corners.</td></tr>
+          <tr><td><code class="inline">--radius-lg</code></td><td>28px</td><td>Hero plan card, stats grid, big surfaces.</td></tr>
+          <tr><td><code class="inline">--radius-pill</code></td><td>999px</td><td>Buttons, badges, pills, focus rings.</td></tr>
+          <tr><td><strong>Breakpoints</strong></td><td>480 / 640 / 768 / 1023 / 1024</td><td>Five named breakpoints. Mobile-first: write for 480, layer up.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="rule">
+        <div class="rule__label">The Flat-Plus-Bird Rule</div>
+        <div class="rule__body">The system has exactly one shadow: a soft warm-tinted shadow that grounds Bandit. <strong>Every other surface is flat.</strong> If a card, button, or panel has a drop shadow, it's wrong. Depth comes from tonal warm layering (Sun → Cloud-deep → Cloud), not from elevation.</div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 5 ===== -->
+    <section id="bandit">
+      <div class="section__head">
+        <span class="section__num">05</span>
+        <h2>The Bandit character system</h2>
+      </div>
+      <p class="section__intro">Bandit is the loyal, level-headed friend you call when things go wrong. The single budgie is the face of the brand. The flock is the worldview underneath. The character carries the warmth that bold colour alone cannot.</p>
+
+      <h3>5a · Character identity</h3>
+      <p>The canonical sheet is the source of truth. Any asset that conflicts with it is wrong. <strong>Don't edit drift out. Regenerate from the canonical.</strong></p>
+
+      <div style="margin: var(--space-md) 0; border-radius: var(--radius-md); overflow: hidden; background: var(--cloud-deep); padding: var(--space-md);">
+        <img src="character/01-canonical/bandit-canonical-v1-4x.png" alt="Bandit canonical character sheet: six orthographic views of the same individual bird laid out in a 2-row 3-column grid, used as the source of truth for every downstream asset" width="5784" height="4320" loading="eager" />
+        <p style="font-family: var(--font-mono); font-size: var(--text-caption); margin-top: var(--space-sm); color: var(--ink-soft);">character/01-canonical/bandit-canonical-v1-4x.png · 5784 × 4320</p>
+      </div>
+
+      <h4>The 8 drift checks</h4>
+      <p>When reviewing a generated output against canonical, look for these specifically.</p>
+
+      <div class="drift-check"><span class="drift-check__name">Head shape</span><span class="drift-check__rule">Smooth domed. <strong>Not</strong> angular or beaked-forward.</span></div>
+      <div class="drift-check"><span class="drift-check__name">Beak</span><span class="drift-check__rule">Tiny, clean, triangular. <strong>No</strong> waxy cere bump above it.</span></div>
+      <div class="drift-check"><span class="drift-check__name">Eyes</span><span class="drift-check__rule">Large round black dots. <strong>Not</strong> realistic, not anime.</span></div>
+      <div class="drift-check"><span class="drift-check__name">Cheek dots</span><span class="drift-check__rule">Soft pink blush, both sides.</span></div>
+      <div class="drift-check"><span class="drift-check__name">Body striping</span><span class="drift-check__rule">Only on head crown and back of wings. <strong>Not</strong> all over.</span></div>
+      <div class="drift-check"><span class="drift-check__name">Tail</span><span class="drift-check__rule">Long tapered point. Rainbow gradient yellow → pink → blue.</span></div>
+      <div class="drift-check"><span class="drift-check__name">Feet</span><span class="drift-check__rule">Two small, pink, simple.</span></div>
+      <div class="drift-check"><span class="drift-check__name">Line weight</span><span class="drift-check__rule">Single weight, hand-drawn quality. <strong>No</strong> vector hardness.</span></div>
+
+      <h3>5b · Character variants</h3>
+      <p>Every shipped asset in <code class="inline">03-final-assets/</code>, grouped by category. Each card lists filename, intended use, background type, and whether a 4x upscale is on disk.</p>
+
+      <h4>Marketing · 15 assets</h4>
+      <div class="asset-grid">
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/marketing/hero-pressing-button.png" alt="Bandit pressing an oversized red panic button, weight forward" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-pressing-button</div>
+            <p class="asset__desc">Bandit pressing the panic button, weight forward. The homepage hero anchor. Transparent base; the 4x export bakes in a Sun background.</p>
+            <div class="asset__meta"><span class="tag tag--bg-trans">TRANSPARENT</span><span class="tag tag--has-4x">4x (Sun bg)</span><span class="tag">600px</span><span class="tag">PSD</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/marketing/hero-front-view.png" alt="Bandit standing front-on, neutral confident stance" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-front-view</div>
+            <p class="asset__desc">Standing front-facing, neutral confident "I've got you" energy.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/marketing/hero-waving-welcome.png" alt="Bandit waving with one wing in greeting" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-waving-welcome</div>
+            <p class="asset__desc">Waving in greeting. Onboarding / first-touch surfaces.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/marketing/hero-arriving-600px.png" alt="A Bandit responder arriving on the scene" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-arriving</div>
+            <p class="asset__desc">Responder arriving on scene. Step 3 in How-it-works.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag">600px</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/marketing/hero-three-feathers.png" alt="Bandit perched, three feathers visible. The rail bird in How-it-works." loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-three-feathers</div>
+            <p class="asset__desc">Perched on the rail line in How-it-works. Sits on the divider.</p>
+            <div class="asset__meta"><span class="tag tag--bg-trans">TRANSPARENT</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/marketing/hero-passing-package.png" alt="Bandit passing a package to a member, two-character scene" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-passing-package</div>
+            <p class="asset__desc">Two-character scene: Bandit handing a package to a member. Test-call section.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/marketing/hero-telephone-pole.png" alt="Bandit perched on a telephone pole" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-telephone-pole</div>
+            <p class="asset__desc">Perched on a telephone pole. Watching-over moment.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb"><img src="character/03-final-assets/marketing/hero-security-scene-transparent.png" alt="Three-character scene: a Bandit security responder beside a member, watching out for them" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-security-scene</div>
+            <p class="asset__desc">Multi-character scene: security Bandit + member + onlookers. Live homepage hero.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--bg-trans">TRANSPARENT</span><span class="tag tag--has-4x">4x</span><span class="tag">PSD</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/marketing/hero-stretcher-scene-4x.png" alt="Three-character scene: two Bandits carrying a member on a stretcher into hospital care" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">hero-stretcher-scene</div>
+            <p class="asset__desc">Three-character scene: two responders + member on stretcher. Medical section.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--has-4x">4x</span><span class="tag">PSD</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb"><img src="character/03-final-assets/marketing/flock-white-bg.png" alt="Multi-character flock scene with many Bandits in the air, used as the pricing-section background" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">flock-white-bg</div>
+            <p class="asset__desc">Multi-character flock. Pricing-section background (mirrored, low-opacity).</p>
+            <div class="asset__meta"><span class="tag">WHITE BG</span></div>
+          </div>
+        </article>
+      </div>
+
+      <h4>Product · 5 assets</h4>
+      <div class="asset-grid">
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/product/state-empty-shrug.png" alt="Bandit shrugging with both wings out, palms up" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">state-empty-shrug</div>
+            <p class="asset__desc">Shrugging confused. Empty states, "nothing here yet".</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/product/state-loading-listening.png" alt="Bandit with head tilted, listening" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">state-loading-listening</div>
+            <p class="asset__desc">Head tilted, listening. Processing / waiting states.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/product/state-success-thumbsup.png" alt="Bandit raising one wing in approval" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">state-success-thumbsup</div>
+            <p class="asset__desc">One wing raised in approval. Success / completion confirmations.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/product/state-quiet-sleeping.png" alt="Bandit curled up sleeping, head tucked into chest" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">state-quiet-sleeping</div>
+            <p class="asset__desc">Curled up sleeping. Dashboard "all quiet" state.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/product/state-pointing-right.png" alt="Bandit pointing one wing to the right" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">state-pointing-right</div>
+            <p class="asset__desc">Pointing one wing to the right. Tooltip anchor / instructional.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+      </div>
+
+      <h4>Emotional · 2 assets</h4>
+      <div class="asset-grid">
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/emotional/emotion-relieved.png" alt="Bandit with a relieved smile and eyes closed" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">emotion-relieved</div>
+            <p class="asset__desc">Relieved smile, eyes closed. Post-resolution moments.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/emotional/emotion-panicking-4x.png" alt="Bandit with a wide-eyed panicked expression" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">emotion-panicking</div>
+            <p class="asset__desc">Wide-eyed panicked expression. Use sparingly; Bandit is the calm one.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--has-4x">4x</span></div>
+          </div>
+        </article>
+      </div>
+
+      <h4>Roles · 7 assets</h4>
+      <div class="asset-grid">
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/roles/role-security-4x.png" alt="Bandit wearing a navy responder vest with a small white cross badge" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">role-security</div>
+            <p class="asset__desc">Navy responder vest, small white cross badge. <strong>No weapons, no intimidating gear.</strong></p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--has-4x">4x</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/roles/role-dispatcher-4x.png" alt="Bandit as a dispatcher coordinating the response" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">role-dispatcher</div>
+            <p class="asset__desc">Dispatcher coordinating the response. Step 2 in How-it-works.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--has-4x">4x</span><span class="tag">600px</span><span class="tag">PSD</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/roles/role-doctor-4x.png" alt="Bandit as a doctor with stethoscope, gentle expression" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">role-doctor</div>
+            <p class="asset__desc">Doctor variant with stethoscope, gentle expression.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--has-4x">4x</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/roles/role-nurse-4x.png" alt="Bandit as a nurse" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">role-nurse</div>
+            <p class="asset__desc">Nurse variant. Pairs with role-doctor for medical surfaces.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--has-4x">4x</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/roles/role-injured-wing-4x.png" alt="Bandit with an injured wing in a sling" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">role-injured-wing</div>
+            <p class="asset__desc">Injured wing in a sling. Post-incident / recovery surfaces.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--has-4x">4x</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="asset__thumb asset__thumb--sun"><img src="character/03-final-assets/roles/role-distressed-head-4x.png" alt="Close-up of Bandit's head with a distressed expression" loading="lazy" /></div>
+          <div class="asset__body">
+            <div class="asset__file">role-distressed-head</div>
+            <p class="asset__desc">Distressed head close-up. Pre-resolution moments only.</p>
+            <div class="asset__meta"><span class="tag tag--bg-sun">SUN BG</span><span class="tag tag--has-4x">4x</span></div>
+          </div>
+        </article>
+      </div>
+
+      <h3>5c · Usage rules</h3>
+
+      <div class="rule">
+        <div class="rule__label">Minimum size</div>
+        <div class="rule__body">Bandit's body must read as the budgie character at the rendered size. <strong>56px tall is the floor</strong>, used as <code class="inline">.step__bird</code> on small phones (&lt;480px). Below that, the eye dots and cheek blush vanish and the silhouette could be any bird. For decorative anchors, 56 to 90px. For storytelling moments, 260px or larger.</div>
+      </div>
+      <div class="rule">
+        <div class="rule__label">Clear space</div>
+        <div class="rule__body">Allow padding equal to <strong>one beak-height</strong> of clear space around the character on every side. Don't crop tail feathers. Don't run text into the silhouette.</div>
+      </div>
+      <div class="rule">
+        <div class="rule__label">Yellow on yellow</div>
+        <div class="rule__body">When Bandit sits on Sun, <strong>always use the sticker-style white outline</strong> baked into the canonical render. Don't rebuild the silhouette without it. Don't use a drop shadow as a substitute; that violates the Flat-Plus-Bird Rule.</div>
+      </div>
+      <div class="rule">
+        <div class="rule__label">The Anchor Bird Rule</div>
+        <div class="rule__body">Bandit's body stays Cloud. Brand colours appear in the background (Sun), in the tail feathers (Coral, Blossom, Sky-Blue), and in surrounding composition. <strong>Never replace the bird's body colour.</strong> The character is the calm; the world around it is the bold.</div>
+      </div>
+
+      <h4>Don't</h4>
+      <ul style="display: grid; gap: var(--space-2xs); padding-left: 18px; list-style: disc; color: var(--ink); font-weight: 500;">
+        <li>Stretch, rotate beyond ±5°, or skew the character.</li>
+        <li>Recolour the body. Cloud only.</li>
+        <li>Add drop shadows that aren't part of the asset.</li>
+        <li>Overlay text on the character's face or eyes.</li>
+        <li>Mirror the character so they face away from content (a left-facing Bandit on a right-aligned text block is wrong; mirror the asset to face content).</li>
+        <li>Use Bandit as a static logo mark. He has personality and earns space; a tiny brand-corner glyph doesn't honour him.</li>
+        <li>Compose the flock for its own sake. The single bird is the face; the flock is a worldview, not a default treatment.</li>
+      </ul>
+
+      <h3>5d · Asset × use case map</h3>
+      <table class="usage-map">
+        <thead><tr><th>Asset</th><th>Use case</th><th>Live placement</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>hero-pressing-button</td><td>Step 1 anchor in How-it-works</td><td><code class="inline">images/hero-pressing-button-600px</code></td><td>Used as <code class="inline">.step__bird</code></td></tr>
+          <tr><td>role-dispatcher</td><td>Step 2 anchor in How-it-works</td><td><code class="inline">images/bandit-dispatcher-600px</code></td><td>Renamed in <code class="inline">images/</code></td></tr>
+          <tr><td>hero-arriving</td><td>Step 3 anchor in How-it-works</td><td><code class="inline">images/arriving-bird-600px</code></td><td>Renamed in <code class="inline">images/</code></td></tr>
+          <tr><td>hero-three-feathers</td><td>Rail-bird in How-it-works</td><td><code class="inline">images/Bandit-three-feathers-cropped</code></td><td>Sits on the divider line</td></tr>
+          <tr><td>hero-security-scene</td><td>Homepage hero illustration</td><td><code class="inline">images/hero-security-scene</code></td><td>Three-character scene</td></tr>
+          <tr><td>hero-stretcher-scene</td><td>Medical section illustration</td><td><code class="inline">images/nurse-stretcher-scene</code></td><td>Three-character scene</td></tr>
+          <tr><td>hero-passing-package</td><td>Test-call section</td><td><code class="inline">images/meeting-birds</code></td><td>Two-character scene</td></tr>
+          <tr><td>flock-white-bg</td><td>Pricing-section background</td><td><code class="inline">images/flock</code></td><td>Mirrored, low contrast</td></tr>
+          <tr><td>state-empty-shrug</td><td>App empty state</td><td>not yet shipped</td><td>Reserved for product surfaces</td></tr>
+          <tr><td>state-loading-listening</td><td>App processing state</td><td>not yet shipped</td><td>Reserved for product surfaces</td></tr>
+          <tr><td>state-success-thumbsup</td><td>App success state</td><td>not yet shipped</td><td>Reserved for product surfaces</td></tr>
+          <tr><td>state-quiet-sleeping</td><td>App "all quiet" dashboard</td><td>not yet shipped</td><td>Reserved for product surfaces</td></tr>
+          <tr><td>state-pointing-right</td><td>App tooltip anchor</td><td>not yet shipped</td><td>Reserved for product surfaces</td></tr>
+          <tr><td>emotion-relieved</td><td>Post-resolution moment</td><td>not yet shipped</td><td>Reserved for product surfaces</td></tr>
+          <tr><td>emotion-panicking</td><td>Pre-resolution moment</td><td>not yet shipped</td><td>Use sparingly</td></tr>
+          <tr><td>role-security</td><td>Security responder context</td><td>not yet shipped</td><td>Pair with hero-arriving</td></tr>
+          <tr><td>role-doctor / role-nurse</td><td>Medical-response context</td><td>not yet shipped</td><td>Use both, not one</td></tr>
+          <tr><td>role-injured-wing</td><td>Recovery / post-incident</td><td>not yet shipped</td><td>Member-side, not responder</td></tr>
+          <tr><td>role-distressed-head</td><td>Pre-resolution moment</td><td>not yet shipped</td><td>Use sparingly</td></tr>
+        </tbody>
+      </table>
+
+      <h3>5e · Multi-character scenes</h3>
+      <p><strong>Same species, different individuals: distinguish by size.</strong> Adult Bandit at full scale; children, family members, or "second budgie" characters appear as a smaller version of the same model. Same line weight, same proportions, same identity rules; only height is different.</p>
+      <p>This is how the homepage hero (<code class="inline">hero-security-scene</code>), medical illustration (<code class="inline">hero-stretcher-scene</code>), and test-call illustration (<code class="inline">hero-passing-package</code>) all work. Two or three Bandits, one anchor character at full size, the rest scaled down 70–85%.</p>
+    </section>
+
+    <!-- ===== SECTION 6 ===== -->
+    <section id="firefly">
+      <div class="section__head">
+        <span class="section__num">06</span>
+        <h2>Firefly generation workflow</h2>
+      </div>
+      <p class="section__intro">How to produce a new Bandit asset without drifting the character. Anyone on the team should be able to follow this section alone and ship a correct asset on first or second try.</p>
+
+      <h3>The fundamental rule</h3>
+      <div class="rule">
+        <div class="rule__label">Rule #1</div>
+        <div class="rule__body"><strong>Don't describe the character in text. Let references carry identity. Only describe what's new: the new pose, the new gear, the new layout.</strong> Verbose character descriptions in a multimodal prompt fight the visual reference and cause drift. The model tries to satisfy both, the two slightly disagree, identity wobbles. Compounds fast.</div>
+      </div>
+      <p>Google's official Nano Banana 2 prompting guide formula:</p>
+      <pre class="code"><span class="accent">[Reference images]</span> + <span class="accent">[Relationship instruction]</span> + <span class="accent">[New scenario]</span></pre>
+      <p>Not <code class="inline">[Reference images] + [200 words about eyes, beak, tail, feet] + [New scenario]</code>.</p>
+
+      <h3>Reference architecture · the four-stage pipeline</h3>
+      <div class="pipeline">
+        <div class="stage">
+          <span class="stage__num">Stage 0</span>
+          <span class="stage__name">Style reference</span>
+          <span class="stage__path">00-style-reference/</span>
+          <span class="stage__desc">Curated style sheet showing the desired look. Hand-drawn, charming, children's-book quality. <strong>Style only, not yet a character.</strong></span>
+        </div>
+        <div class="stage">
+          <span class="stage__num">Stage 1</span>
+          <span class="stage__name">Canonical</span>
+          <span class="stage__path">01-canonical/</span>
+          <span class="stage__desc">The definitive Bandit. One bird, six orthographic views. Source of truth for everything downstream.</span>
+        </div>
+        <div class="stage">
+          <span class="stage__num">Stage 2</span>
+          <span class="stage__name">Family sheets</span>
+          <span class="stage__path">02-family-references/</span>
+          <span class="stage__desc">Four sheets: standing, active, sitting, expressive. Same character, different posture families.</span>
+        </div>
+        <div class="stage">
+          <span class="stage__num">Stage 3</span>
+          <span class="stage__name">Final assets</span>
+          <span class="stage__path">03-final-assets/</span>
+          <span class="stage__desc">Marketing, product, emotional, roles. One pose per file. Generated against canonical + the matching family.</span>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="rule__label">Stage gating</div>
+        <div class="rule__body">Stage 1 uses Stage 0 as input. Stage 2 uses Stage 1. Stage 3 uses Stage 1 + the relevant Stage 2 sheet. <strong>Never skip a stage.</strong> Going Stage 0 → Stage 3 produces drift.</div>
+      </div>
+
+      <h3>Which references to load</h3>
+      <table>
+        <thead><tr><th>Asset type</th><th>References to put on canvas</th></tr></thead>
+        <tbody>
+          <tr><td>New single-character pose</td><td>canonical + relevant family sheet</td></tr>
+          <tr><td>New role variant</td><td>canonical + family-standing</td></tr>
+          <tr><td>New scene (2 characters)</td><td>canonical + role asset for the responder</td></tr>
+          <tr><td>New scene (3 characters)</td><td>canonical + role asset (limit 5 references total per prompt)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>The three templates</h3>
+      <p>Use these verbatim. Three lines plus references is the whole prompt. Resist adding character description.</p>
+
+      <h4>Template 1 · Generate canonical character sheet (used ONCE)</h4>
+      <p style="color: var(--ink-soft); font-size: var(--text-caption);">Surface: Firefly Boards. Drop the latest sheet from <code class="inline">00-style-reference/</code> onto canvas. Sample from canvas.</p>
+      <pre class="code">Using the attached style reference, generate a character model sheet
+for ONE specific bird character on a flat cream background.
+
+Match the line-art style, proportions, and personality of the reference
+exactly. Pick one bird from the reference and stay consistent with that
+one bird across all six views — same individual, different camera
+angles, not six different birds.
+
+Layout: 2 rows of 3 views.
+Top row: front orthographic, 3/4 front, profile (left side).
+Bottom row: 3/4 back, back orthographic, T-pose with wings slightly
+extended outward.
+
+Small text labels beneath each view.</pre>
+      <p style="color: var(--ink-soft); font-size: var(--text-caption);">After generation: review against the 8 drift checks. Regenerate if anything's off. Save the keeper as <code class="inline">bandit-canonical-v[N].png</code>. Once this exists, Template 1 is retired.</p>
+
+      <h4>Template 2 · Generate pose family sheet (used 4× total)</h4>
+      <p style="color: var(--ink-soft); font-size: var(--text-caption);">Surface: Firefly Boards. Drop the latest canonical sheet from <code class="inline">01-canonical/</code> onto canvas. Sample from canvas.</p>
+      <pre class="code">Using the attached character sheet as reference, generate a sheet
+showing the same character in 4 different [FAMILY-NAME] poses, laid
+out evenly on a flat cream background.
+
+Same character, same line-art style, same proportions. Each pose
+shows the same individual bird from the reference, only the body
+posture and wing position changes.
+
+Poses:
+1. [POSE 1 — one sentence]
+2. [POSE 2 — one sentence]
+3. [POSE 3 — one sentence]
+4. [POSE 4 — one sentence]</pre>
+      <p style="color: var(--ink-soft); font-size: var(--text-caption);">What's NOT in this prompt: any character description. The reference does that work.</p>
+
+      <h4>Template 3 · Generate final asset (the workhorse)</h4>
+      <p style="color: var(--ink-soft); font-size: var(--text-caption);">Surface: Firefly Boards. On canvas: latest from <code class="inline">01-canonical/</code> + latest from the relevant <code class="inline">02-family-references/</code> sheet. Sample both.</p>
+      <pre class="code">Using the attached references, generate the same character in this
+new pose: [SPECIFIC POSE — one sentence].
+
+Same line-art style, same proportions, same identity as references.
+Background: flat cream, no environment, no shadow.
+
+[OPTIONAL — only for role variants:]
+The character is wearing [GEAR — one short phrase]. Keep all other
+features identical to the references.</pre>
+
+      <h3>The 8 anti-drift rules</h3>
+      <ol class="checklist">
+        <li><strong>Never paste verbose character descriptions</strong> into prompts that already have references. Top cause of drift.</li>
+        <li><strong>Never edit a generation more than twice.</strong> Drift compounds. Regenerate from references instead.</li>
+        <li><strong>Never attach more than 5 references in one prompt.</strong> Two to three is the sweet spot.</li>
+        <li><strong>Never mix aspect ratios within a pose family.</strong> Pick one and stay there.</li>
+        <li><strong>Never skip a stage.</strong> Stage 0 → Stage 3 produces drift every time.</li>
+        <li><strong>Never use negative phrasing</strong> ("no cere", "not realistic"). Google's guide says positive framing only.</li>
+        <li><strong>Use Firefly Boards' conversational refinement.</strong> "Tilt the head more." "Make the wing higher." Multi-turn is what the model is built for.</li>
+        <li><strong>Save every keeper</strong> with the naming convention. Regenerate, never edit out drift.</li>
+      </ol>
+
+      <h3>Naming conventions</h3>
+      <table>
+        <thead><tr><th>Type</th><th>Pattern</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Style reference</td><td><code class="inline">style-ref-v[N].png</code></td><td><code class="inline">style-ref-v1.png</code></td></tr>
+          <tr><td>Canonical</td><td><code class="inline">bandit-canonical-v[N].png</code></td><td><code class="inline">bandit-canonical-v1.png</code></td></tr>
+          <tr><td>Family sheet</td><td><code class="inline">family-[name]-v[N].png</code></td><td><code class="inline">family-standing-v1.png</code></td></tr>
+          <tr><td>Final asset</td><td><code class="inline">[category]-[descriptor].png</code></td><td><code class="inline">hero-pressing-button.png</code></td></tr>
+          <tr><td>Working / rejected</td><td><code class="inline">_wip-[anything].png</code></td><td><code class="inline">_wip-flying-attempt-3.png</code></td></tr>
+        </tbody>
+      </table>
+      <p>Underscore prefix = working file, not for use. Always pick the highest <code class="inline">v[N]</code> when referencing.</p>
+
+      <h3>Model and platform guidance</h3>
+      <table>
+        <thead><tr><th>Tool</th><th>Use for</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Adobe Firefly Boards + Gemini 3.1 (Nano Banana 2)</td><td>Primary generation surface</td><td>Boards keeps references on canvas; Sample-from-canvas plus conversational refinement is what Nano Banana 2 is built for.</td></tr>
+          <tr><td>FLUX.1 Kontext [max]</td><td>Canonical generation only</td><td>Best reference consistency at the canonical step.</td></tr>
+          <tr><td>Photoshop</td><td>Final cleanup, vectorisation, transparency</td><td>Post-processing only. Don't paint drift fixes; regenerate.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Workflow for a new asset request</h3>
+      <ol class="checklist">
+        <li>Identify pose family (standing / active / sitting / expressive / role variant).</li>
+        <li>Identify references to attach: latest from <code class="inline">01-canonical/</code> + latest matching family sheet from <code class="inline">02-family-references/</code>.</li>
+        <li>Construct a Template 3 prompt: short, just the new pose.</li>
+        <li>Paste into Firefly Boards. Sample from canvas.</li>
+        <li>When the result comes back, run the 8 drift checks and call out anything specific that shifted.</li>
+        <li>If drifted: regenerate with stronger references. Don't edit out drift.</li>
+        <li>Save with the naming convention. Move to <code class="inline">03-final-assets/</code> when locked.</li>
+      </ol>
+    </section>
+
+    <!-- ===== SECTION 7 ===== -->
+    <section id="voice">
+      <div class="section__head">
+        <span class="section__num">07</span>
+        <h2>Voice &amp; copy</h2>
+      </div>
+      <p class="section__intro">The brand writes like a friend texting, not an insurer's compliance department. Premium plain-language. Words on the live site set the standard. Every new piece of copy should pass for something that already shipped.</p>
+
+      <h3>Headline pattern</h3>
+      <p>Three-step product copy is the master template:</p>
+      <pre class="code"><span class="accent">You press.</span>  →  <span class="accent">We dispatch.</span>  →  <span class="accent">They arrive.</span></pre>
+      <p>Each step is two words. Subject + verb. Present tense. Period. Reuse this rhythm whenever a product flow has three beats. Never break the rhythm with a fourth step that makes the cadence wobble.</p>
+
+      <h3>Vocabulary</h3>
+      <table>
+        <thead><tr><th>Lean into</th><th>Ban</th></tr></thead>
+        <tbody>
+          <tr><td>members, household, the flock</td><td>customers, users, subscribers</td></tr>
+          <tr><td>premium, looked after, covered</td><td>insurance, medical aid, policy</td></tr>
+          <tr><td>perched, alert, nimble</td><td>cutting-edge, innovative, revolutionary</td></tr>
+          <tr><td>budgie, Bandit, press the budgie</td><td>device, system, platform, solution</td></tr>
+          <tr><td>real responder, real vehicle</td><td>response unit, service provider</td></tr>
+          <tr><td>"hey budgie"</td><td>"please activate", "kindly note"</td></tr>
+        </tbody>
+      </table>
+      <div class="rule">
+        <div class="rule__label">The Plain-Language Rule</div>
+        <div class="rule__body"><strong>"Insurance" and "medical aid" are forbidden in display copy.</strong> These are off-limits per PRODUCT.md. Use "covered", "looked after", or "the R10,000 hospital benefit" instead.</div>
+      </div>
+
+      <h3>Sentence length and rhythm</h3>
+      <p>Short. Often shorter than feels natural. The brand voice favours <strong>three short sentences</strong> over one compound one. "You arrive at the hospital. They ask for a deposit. We've already paid it." beats "Upon arriving at the hospital, although a deposit may be requested, this has been handled in advance."</p>
+      <p><strong>Average sentence length on the live site: 9 words.</strong> Aim for that.</p>
+
+      <h3>Capitalisation</h3>
+      <p>Sentence case throughout. Headlines, navigation, buttons: all sentence case. The only all-caps treatments are eyebrows (the small uppercase labels above section heads) and pills like <code class="inline">CAPE TOWN</code> tickers. Title Case Is Not Used Anywhere. Avoid it.</p>
+      <p><strong>No em dashes.</strong> Use commas, colons, semicolons, periods, or parentheses. Also not <code class="inline">--</code>. The bible enforces this on prompt copy too.</p>
+
+      <h3>Write like this · not like this</h3>
+
+      <h4>Headline</h4>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">Do</div>
+          <div class="do-dont__example">Help is one press away.</div>
+          <div class="do-dont__caption">Five words, one promise, period. Sentence case.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Don't</div>
+          <div class="do-dont__example">Trust the Power of Innovative Family Safety Solutions Today!</div>
+          <div class="do-dont__caption">Title case + abstract nouns + exclamation + jargon. Every word is empty.</div>
+        </div>
+      </div>
+
+      <h4>Body copy</h4>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">Do</div>
+          <div class="do-dont__example">Press the button. We dispatch a real responder in seconds. You watch them arrive on a map. That's the whole product.</div>
+          <div class="do-dont__caption">Four sentences. Each one drops a single concrete fact. Operational verbs.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Don't</div>
+          <div class="do-dont__example">By leveraging our state-of-the-art emergency response infrastructure, we deliver unparalleled peace of mind through seamless real-time visibility across our integrated dispatch platform.</div>
+          <div class="do-dont__caption">One run-on sentence packed with empty modifiers. Nothing landed.</div>
+        </div>
+      </div>
+
+      <h4>CTA</h4>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">Do</div>
+          <div class="do-dont__example">Join the flock · R149/mo</div>
+          <div class="do-dont__caption">Verb + brand idea + price. Calm middle dot, no slash, no caps.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Don't</div>
+          <div class="do-dont__example">SUBSCRIBE NOW &gt;&gt;</div>
+          <div class="do-dont__caption">Caps + double chevron + no context. Reads as urgency the brand doesn't sell.</div>
+        </div>
+      </div>
+
+      <h4>Error state</h4>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">Do</div>
+          <div class="do-dont__example">We didn't get that. Try again, or call 0860 BUDGIE if the app's stuck.</div>
+          <div class="do-dont__caption">Plain. Tells the member what happened, gives a fallback, names the fallback.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Don't</div>
+          <div class="do-dont__example">Error 4032. Connection failed. Please retry your request.</div>
+          <div class="do-dont__caption">Error code, no help, no fallback. Reads as a system passing the buck.</div>
+        </div>
+      </div>
+
+      <h4>Empty state</h4>
+      <div class="do-dont">
+        <div class="do-dont__col do-dont__col--do">
+          <div class="do-dont__label">Do</div>
+          <div class="do-dont__example">Nothing to look at. Bandit's on the perch. Press the button only when you mean it.</div>
+          <div class="do-dont__caption">Frames "nothing happening" as good. Hint of brand voice (Bandit, perch). Quietly reinforces deliberate-press behaviour.</div>
+        </div>
+        <div class="do-dont__col do-dont__col--dont">
+          <div class="do-dont__label">Don't</div>
+          <div class="do-dont__example">No incidents found. Try refreshing or contact support.</div>
+          <div class="do-dont__caption">Generic empty state. Reads as a list view, not as reassurance.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 8 ===== -->
+    <section id="components">
+      <div class="section__head">
+        <span class="section__num">08</span>
+        <h2>Component library</h2>
+      </div>
+      <p class="section__intro">Every shipping UI component, with states, defining selectors, and usage notes. Pulled from <code class="inline">src/styles.css</code> and rendered here at production specs.</p>
+
+      <div class="component">
+        <div class="component__header">
+          <span class="component__name">Primary button</span>
+          <span class="component__class">.btn .btn--ink</span>
+        </div>
+        <div class="component__demo">
+          <button class="btn btn--ink" type="button">Join the flock · R149/mo</button>
+          <button class="btn btn--ink" type="button" disabled>Disabled</button>
+          <button class="btn btn--ink btn--square" type="button">How a test call works</button>
+        </div>
+        <p class="component__notes">The single shipping button. Ink background, Cloud text, pill radius (999px). <strong>Hover:</strong> lift 2px. <strong>Active:</strong> press 1px. <strong>Focus:</strong> double box-shadow ring (Cloud inset + Coral-deep outer). Padding 16/24 default; 18/28 in the hero; 14/22 with <code class="inline">.btn--square</code> (radius 14px). Use sentence case for the label. Pair with a price or context after a middle dot when the action is a commitment.</p>
+      </div>
+
+      <div class="component">
+        <div class="component__header">
+          <span class="component__name">Block button</span>
+          <span class="component__class">.btn .btn--ink .btn--block</span>
+        </div>
+        <div class="component__demo" style="display: block;">
+          <button class="btn btn--ink btn--block" type="button">Sign up · 4 minutes</button>
+        </div>
+        <p class="component__notes">Full-width pill button used inside cards (the pricing plan card). Same hover/active/focus as the primary. Padding 18/24. Pair with a time estimate after a middle dot when the action takes longer than 30 seconds.</p>
+      </div>
+
+      <div class="component">
+        <div class="component__header">
+          <span class="component__name">Inline link CTA</span>
+          <span class="component__class">.link</span>
+        </div>
+        <div class="component__demo">
+          <a class="link-demo" href="#">See how it works ↓</a>
+        </div>
+        <p class="component__notes">Underlined link with 4px underline-offset. <strong>Hover:</strong> colour shifts to Coral-deep. <strong>Active:</strong> press 1px. Use as a quiet secondary CTA next to a primary button. Add a directional glyph (↓ for in-page, → for outbound) when the destination matters.</p>
+      </div>
+
+      <div class="component">
+        <div class="component__header">
+          <span class="component__name">Live badge</span>
+          <span class="component__class">.badge .badge__dot</span>
+        </div>
+        <div class="component__demo">
+          <span class="badge"><span class="badge__dot"></span>Live across South Africa</span>
+        </div>
+        <p class="component__notes">Pill background at 8% Ink. Coral dot pulses (calm radial breathe, 2.4s loop). <strong>Reduced motion kills the pulse.</strong> Use only for genuine "live" or "active" states. This is the One Coral Rule in microcosm.</p>
+      </div>
+
+      <div class="component">
+        <div class="component__header">
+          <span class="component__name">Pill (step counter)</span>
+          <span class="component__class">.pill .pill--ink</span>
+        </div>
+        <div class="component__demo">
+          <span class="pill pill--ink">0s</span>
+          <span class="pill pill--ink">≈38s</span>
+          <span class="pill pill--ink">≈4:30</span>
+        </div>
+        <p class="component__notes">Tiny ink pill for time estimates inside step cards. Caption-size (12px), extrabold weight. Use in How-it-works steps to anchor each beat to a real elapsed time.</p>
+      </div>
+
+      <div class="component">
+        <div class="component__header">
+          <span class="component__name">Eyebrow</span>
+          <span class="component__class">.eyebrow .eyebrow--coral</span>
+        </div>
+        <div class="component__demo">
+          <span class="eyebrow">The real difference</span>
+        </div>
+        <p class="component__notes">Caps label above section headings. 14px, weight 700, tracking 0.12em. Coral-deep colour (only place coral-deep colours small text). Sentence case the words; uppercase via CSS only.</p>
+      </div>
+
+      <div class="component">
+        <div class="component__header">
+          <span class="component__name">Stats grid</span>
+          <span class="component__class">.stats .stats__cell</span>
+        </div>
+        <div class="component__demo component__demo--sun" style="padding: 0; border: 0; background: transparent;">
+          <div class="stats-demo">
+            <div class="stats-demo__cell">
+              <span class="stats-demo__label">Average admission deposit</span>
+              <span class="stats-demo__value">R 8 400</span>
+            </div>
+            <div class="stats-demo__cell">
+              <span class="stats-demo__label">Covered per incident</span>
+              <span class="stats-demo__value">R 10 000</span>
+            </div>
+            <div class="stats-demo__cell">
+              <span class="stats-demo__label">You wait</span>
+              <span class="stats-demo__value">0 minutes</span>
+            </div>
+          </div>
+        </div>
+        <p class="component__notes">Three-cell row on Sun, dividers in Sun-deep. Tabular numerals on values for vertical alignment of digits. <strong>Stacks to vertical below 768px.</strong> Use this <em>only</em> for facts that compare against each other (the wedge: their world, your world, our world). Don't use as a generic "key metrics" grid; that's the hero-metric template, banned.</p>
+      </div>
+
+      <div class="component">
+        <div class="component__header">
+          <span class="component__name">Plan card</span>
+          <span class="component__class">.plan</span>
+        </div>
+        <div class="component__demo component__demo--sun">
+          <div class="plan">
+            <div class="plan__price">
+              <span class="plan__amount">R149</span>
+              <span class="plan__period">/ month, household</span>
+            </div>
+            <ul class="plan__features">
+              <li><span class="check" aria-hidden="true">✓</span>Unlimited emergency dispatch</li>
+              <li><span class="check" aria-hidden="true">✓</span>R10 000 per-incident hospital benefit</li>
+              <li><span class="check" aria-hidden="true">✓</span>Live tracking shared with family</li>
+              <li><span class="check" aria-hidden="true">✓</span>Up to 6 household members</li>
+              <li><span class="check" aria-hidden="true">✓</span>First test call included</li>
+            </ul>
+            <button class="btn btn--ink btn--block" type="button" style="margin-top: 32px;">Sign up · 4 minutes</button>
+          </div>
+        </div>
+        <p class="component__notes">Cloud card on Sun surface. 28px radius, 28–40px padding (clamped). Price in display-large with tabular numerals; period in lead-size, ink-soft. Feature list uses 22px Sun-coloured check chip. <strong>One plan only.</strong> Don't introduce tiered plans without re-opening brand strategy first.</p>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
