@@ -4,11 +4,12 @@ dist
 .DS_Store
 *.log
 
-# Source assets — only the published images/ are deployed
-character
-images-src
-prompts
-reference
+# Source assets (only the published images/ + the curated style-guide/ are deployed).
+# `/character` is root-anchored so the curated `style-guide/character/` ships.
+/character
+/images-src
+/prompts
+/reference
 
 # Source files we don't ship
 *.psd
