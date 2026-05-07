@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panicbudgie · Help is one press away.</title>
+  <meta name="description" content="Press once. A real responder is on the way. R149 a month, whole household. Built-in R10,000 medical benefit." />
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- Onest from Google Fonts — single family for both display and body. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Critical CSS inlined: tokens, reset, layout, atoms used above the fold, nav, -->
+  <!-- hero, hero entrance keyframes, skip link. Keep in sync with styles.css.      -->
+  <style>
+    :root {
+      --sun: #F2B705; --sun-deep: #E0A800; --coral: #FF6A3D; --coral-deep: #B73B11;
+      --blossom: #FFC8DD; --sky: #5BA9F5; --cloud: #FAF3E4; --cloud-deep: #F2E8D2;
+      --ink: #1F1B16; --ink-2: #2A241D; --ink-3: #322C24; --ink-soft: #5C5147;
+      --max-width: 1280px; --pad-x: clamp(24px, 5vw, 64px);
+      --space-2xs: 0.5rem; --space-xs: 0.75rem; --space-sm: 1rem; --space-md: 1.5rem;
+      --radius-pill: 999px;
+      --font-family: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-display-family: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --text-body: 1rem; --text-label: 0.875rem; --text-title: clamp(1.375rem, 1.6vw, 1.5rem);
+      --text-lead: clamp(1.125rem, 1.2vw, 1.25rem);
+      --weight-medium: 500; --weight-semibold: 600; --weight-bold: 700; --weight-extrabold: 800;
+      --track-display: -0.025em; --track-heading: -0.015em; --track-default: 0;
+      --lead-tight: 0.95; --lead-normal: 1.2; --lead-relaxed: 1.55;
+      --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: var(--font-family); color: var(--ink); background: var(--cloud); font-size: var(--text-body); font-weight: 400; line-height: var(--lead-relaxed); -webkit-font-smoothing: antialiased; }
+    img, svg { display: block; max-width: 100%; }
+    picture { display: contents; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: 0; background: none; padding: 0; color: inherit; }
+    h1, p { margin: 0; }
+    h1 { text-wrap: balance; }
+    .skip-link { position: absolute; top: 12px; left: 12px; padding: 12px 20px; background: var(--ink); color: var(--cloud); border-radius: var(--radius-pill); font-weight: var(--weight-bold); font-size: var(--text-body); z-index: 1000; transform: translateY(calc(-100% - 24px)); transition: transform 180ms var(--ease-out-quint); }
+    .skip-link:focus { transform: translateY(0); }
+    .nav { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px var(--pad-x); background: var(--sun); }
+    .nav__brand { display: flex; align-items: center; gap: 10px; font-weight: var(--weight-extrabold); font-size: var(--text-title); letter-spacing: var(--track-heading); color: var(--ink); }
+    .brand-logo { height: 38px; width: auto; }
+    .nav__links { display: flex; gap: 36px; align-items: center; margin-left: auto; }
+    .nav__links a { font-weight: var(--weight-medium); font-size: var(--text-body); color: var(--ink); }
+    .nav__signin { background: var(--ink); color: var(--cloud); padding: 10px 18px; border-radius: var(--radius-pill); font-weight: var(--weight-semibold); font-size: var(--text-label); }
+    .nav__menu { display: none; width: 44px; height: 44px; border-radius: var(--radius-pill); background: rgba(31,27,22,0.08); align-items: center; justify-content: center; flex-direction: column; gap: 4px; }
+    .nav__menu span { display: block; width: 16px; height: 2px; background: var(--ink); border-radius: 2px; }
+    @media (max-width: 768px) {
+      .nav { padding: 20px var(--pad-x); }
+      .nav__links, .nav__signin { display: none; }
+      .nav__menu { display: inline-flex; margin-left: auto; }
+      .brand-logo { height: 32px; }
+      .nav__brand { font-size: var(--text-lead); }
+    }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(31,27,22,0.08); border-radius: var(--radius-pill); padding: 8px 14px; font-size: var(--text-label); font-weight: var(--weight-semibold); color: var(--ink); }
+    .badge__dot { display: inline-block; width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--coral); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 16px 24px; border-radius: var(--radius-pill); font-weight: var(--weight-bold); font-size: var(--text-body); transition: transform 200ms ease, background-color 200ms ease; text-align: center; white-space: nowrap; }
+    .btn--ink { background: var(--ink); color: var(--cloud); }
+    .link { display: inline-flex; align-items: center; gap: 4px; font-weight: var(--weight-semibold); font-size: var(--text-body); text-decoration: underline; text-underline-offset: 4px; }
+    .break-lg { display: none; }
+    @media (min-width: 1024px) { .break-lg { display: inline; } }
+    .hero { position: relative; background: var(--sun); overflow: hidden; }
+    .hero__inner { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center; max-width: var(--max-width); margin: 0 auto; padding: 40px var(--pad-x) 110px; }
+    .hero__copy { max-width: 600px; }
+    .hero__h1 { font-size: clamp(4.5rem, 8.25vw, 6.5rem); line-height: var(--lead-tight); font-weight: var(--weight-extrabold); letter-spacing: var(--track-display); margin-top: 28px; font-family: var(--font-display-family); }
+    .hero__lead { font-size: var(--text-lead); line-height: var(--lead-normal); margin-top: 28px; font-weight: var(--weight-medium); max-width: 560px; }
+    .hero__cta { display: flex; flex-wrap: wrap; gap: 25px; align-items: flex-start; margin-top: 40px; }
+    .hero__cta-group { display: inline-flex; flex-direction: column; align-items: center; gap: 14px; }
+    .hero__price-tease { font-size: var(--text-label); color: var(--ink-soft); font-weight: var(--weight-medium); }
+    .hero__cta .btn--ink { padding: 18px 28px; font-size: var(--text-body); }
+    .hero__cta > .link { padding-top: 18px; }
+    .hero__bird { display: grid; place-items: center; }
+    .hero__bird .budgie { width: clamp(260px, 38vw, 520px); height: auto; }
+    .hero__curve { display: block; width: 100%; height: 80px; margin-top: -1px; fill: var(--cloud); }
+    @media (max-width: 768px) {
+      .hero__inner { grid-template-columns: 1fr; padding: 12px var(--pad-x) 60px; gap: 8px; }
+      .hero__bird { order: -1; margin-top: 0; }
+      .hero__bird .budgie { width: 100%; max-width: 100%; }
+      .hero__copy { order: 0; max-width: none; }
+      .hero__h1 { margin-top: 18px; font-size: clamp(6.5rem, 8.25vw, 6.75rem); }
+      .hero__lead { margin-top: 18px; }
+      .hero__cta { gap: 12px; flex-direction: column; align-items: stretch; margin-top: 24px; }
+      .hero__cta .btn--ink, .hero__cta .link { justify-content: center; text-align: center; }
+      .hero__cta > .link { padding-top: 0; }
+      .hero__price-tease { text-align: center; }
+}
+    @keyframes heroRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes heroBird { from { opacity: 0; transform: translateY(24px) scale(0.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .hero__copy > .badge      { animation: heroRise 600ms  60ms var(--ease-out-quint) backwards; }
+    .hero__copy > .hero__h1   { animation: heroRise 800ms 180ms var(--ease-out-quint) backwards; }
+    .hero__copy > .hero__lead { animation: heroRise 700ms 380ms var(--ease-out-quint) backwards; }
+    .hero__copy > .hero__cta  { animation: heroRise 600ms 540ms var(--ease-out-quint) backwards; }
+    .hero__bird               { animation: heroBird 1000ms 300ms var(--ease-out-quint) backwards; }
+  </style>
+
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./debug.css" />
+  <script type="module" src="./debug.js"></script>
+  <script type="module" src="./nav.js"></script>
+  <script type="module" src="./motion.js"></script>
+  <script type="module" src="./network-map.js"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="top">
+  <a class="nav__brand" href="#top">
+    <img src="/logottype.svg" class="brand-logo" alt="" aria-hidden="true" />
+    <span>panicbudgie</span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#how">How it works</a>
+    <a href="#partners">For partners</a>
+    <a href="#members">Members</a>
+    <a href="#pricing">Pricing</a>
+  </nav>
+  <a class="nav__signin" href="#signin">Sign in</a>
+  <button class="nav__menu" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<aside class="nav__sheet" id="mobile-menu" hidden>
+  <div class="nav__sheet-inner">
+    <button class="nav__sheet-close" aria-label="Close menu" type="button">×</button>
+    <nav class="nav__sheet-links" aria-label="Mobile primary">
+      <a href="#how">How it works</a>
+      <a href="#partners">For partners</a>
+      <a href="#members">Members</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a class="nav__sheet-signin" href="#signin">Sign in</a>
+  </div>
+</aside>
+
+<main id="main" tabindex="-1">
+
+  <!-- HERO · Variant A · Daylight Drench -->
+  <section class="hero">
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <span class="badge"><span class="badge__dot"></span>Live across South Africa</span>
+        <h1 class="hero__h1">Help is one <br class="break-lg" />press away.</h1>
+        <p class="hero__lead">Press the button. We dispatch a real responder in seconds. You watch them arrive on a map. That's the whole product.</p>
+        <div class="hero__cta">
+          <div class="hero__cta-group">
+            <a class="btn btn--ink" href="#pricing">Join the flock · R149/mo</a>
+            <p class="hero__price-tease">Whole household · cancel anytime</p>
+          </div>
+          <a class="link" href="#how">See how it works ↓</a>
+        </div>
+      </div>
+      <div class="hero__bird">
+        <picture>
+          <source srcset="/hero-security-scene.webp" type="image/webp" />
+          <img class="budgie" src="/hero-security-scene.png" alt="A Panicbudgie security responder beside a member, watching out for them" loading="eager" decoding="sync" width="1024" height="1024" />
+        </picture>
+      </div>
+    </div>
+    <svg class="hero__curve" viewBox="0 0 1280 80" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M 0 80 Q 320 0 640 30 T 1280 40 L 1280 80 Z" />
+    </svg>
+  </section>
+
+  <!-- MEDICAL · Variant A · The Wedge -->
+  <section class="medical reveal">
+    <div class="container">
+      <div class="medical__copy">
+        <div class="eyebrow eyebrow--coral">The real difference</div>
+        <h2 class="medical__h2">You arrive at the hospital. They ask for a deposit. <span class="text-coral">We've already paid it.</span></h2>
+        <p class="medical__body">Every member gets <strong>R10 000 per incident</strong> for hospital admission, paid directly so treatment starts immediately. No paperwork at the door. No phoning anyone. No friction at the worst possible moment.</p>
+      </div>
+      <div class="medical__bottom">
+        <div class="stats stats--vertical">
+          <div class="stats__cell">
+            <div class="stats__label">Average admission deposit</div>
+            <div class="stats__value">R 8 400</div>
+          </div>
+          <div class="stats__cell">
+            <div class="stats__label">Covered per incident</div>
+            <div class="stats__value">R 10 000</div>
+          </div>
+          <div class="stats__cell">
+            <div class="stats__label">You wait</div>
+            <div class="stats__value">0 minutes</div>
+          </div>
+        </div>
+        <div class="medical__art">
+          <picture>
+            <source srcset="/nurse-stretcher-scene.webp" type="image/webp" />
+            <img src="/nurse-stretcher-scene.png" alt="Two Panicbudgie responders carrying a member on a stretcher into care" loading="lazy" decoding="async" width="2064" height="1050" />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS · Variant C · Sky-Blue panel -->
+  <section class="how reveal" id="how">
+    <div class="container">
+      <div class="how__head">
+        <span class="how__eyebrow">HOW IT WORKS</span>
+        <span class="how__rule"></span>
+      </div>
+      <h2 class="how__h2">Three things happen. After the first, we take it from there.</h2>
+      <div class="how__steps">
+        <div class="how__rail" aria-hidden="true">
+          <div class="how__bird-mask">
+            <picture>
+              <source srcset="/Bandit-three-feathers-cropped.webp" type="image/webp" />
+              <img class="how__bird" src="/Bandit-three-feathers-cropped.png" alt="" loading="lazy" decoding="async" width="1000" height="639" />
+            </picture>
+          </div>
+        </div>
+        <article class="step">
+          <picture>
+            <source srcset="/hero-pressing-button-600px.webp" type="image/webp" />
+            <img class="step__bird" src="/hero-pressing-button-600px.png" alt="A Panicbudgie member pressing the panic button" width="588" height="600" loading="lazy" decoding="async" />
+          </picture>
+          <div class="step__top"><span>01</span><span class="pill pill--ink">0s</span></div>
+          <h3 class="step__title">You press.</h3>
+          <p class="step__body">On the app, on a panic button, or by saying "hey budgie" to a paired speaker. Hold one second so it's deliberate.</p>
+        </article>
+        <article class="step">
+          <picture>
+            <source srcset="/bandit-dispatcher-600px.webp" type="image/webp" />
+            <img class="step__bird" src="/bandit-dispatcher-600px.png" alt="A Panicbudgie dispatcher coordinating the response" width="423" height="600" loading="lazy" decoding="async" />
+          </picture>
+          <div class="step__top"><span>02</span><span class="pill pill--ink">≈38s</span></div>
+          <h3 class="step__title">We dispatch.</h3>
+          <p class="step__body">Our control room sees your location, your medical notes, your emergency contacts. The closest responder accepts. Your circle gets a text.</p>
+        </article>
+        <article class="step">
+          <picture>
+            <source srcset="/arriving-bird-600px.webp" type="image/webp" />
+            <img class="step__bird" src="/arriving-bird-600px.png" alt="A Panicbudgie responder arriving on the scene" width="600" height="617" loading="lazy" decoding="async" />
+          </picture>
+          <div class="step__top"><span>03</span><span class="pill pill--ink">≈4:30</span></div>
+          <h3 class="step__title">They arrive.</h3>
+          <p class="step__body">Live ETA on the map. The responder's name and photo on the screen. You, or whoever's with you, knows exactly when help is at the door.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- NETWORK · Variant F · Map as background, content overlays it -->
+  <section class="network reveal">
+    <div class="network__map" id="network-map" aria-hidden="true"></div>
+    <div class="container network__inner">
+      <div class="network__head">
+        <h2 class="network__h2">A network already on the road.</h2>
+        <p class="network__lede"><span class="text-coral">27&nbsp;314</span> responders on shift across<br /><span class="text-coral">9&nbsp;562</span> vehicles.</p>
+      </div>
+      <div class="network__stats">
+        <div class="ticker">
+          <div class="ticker__label">CAPE TOWN</div>
+          <div class="ticker__n">3 210</div>
+          <div class="ticker__sub">responders ready</div>
+        </div>
+        <div class="ticker">
+          <div class="ticker__label">JOHANNESBURG</div>
+          <div class="ticker__n">6 840</div>
+          <div class="ticker__sub">responders ready</div>
+        </div>
+        <div class="ticker">
+          <div class="ticker__label">DURBAN</div>
+          <div class="ticker__n">2 455</div>
+          <div class="ticker__sub">responders ready</div>
+        </div>
+        <div class="ticker">
+          <div class="ticker__label">BLOEMFONTEIN</div>
+          <div class="ticker__n">1 280</div>
+          <div class="ticker__sub">responders ready</div>
+        </div>
+      </div>
+      <p class="network__foot">Built on partnerships with established medical and security networks. We've helped thousands of members since 2022.</p>
+    </div>
+  </section>
+
+  <!-- TEST CALL · Variant B -->
+  <section class="testcall reveal">
+    <div class="container">
+      <div class="testcall__grid">
+        <div class="testcall__copy">
+          <div class="eyebrow eyebrow--coral">Don't take our word for it</div>
+          <h2 class="testcall__h2">Run a real test call on your second day.</h2>
+          <p class="testcall__body">Schedule it from the app. A real vehicle drives to your address. You see the system work, and so do the people in your house, before anything actually goes wrong.</p>
+          <a class="btn btn--ink btn--square" href="#test">How a test call works</a>
+        </div>
+        <div class="testcall__art">
+          <picture>
+            <source srcset="/meeting-birds.webp" type="image/webp" />
+            <img class="testcall__img" src="/meeting-birds.png" alt="A Panicbudgie member opening their door to a responder during a test call" width="1173" height="714" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING · Variant A -->
+  <section class="pricing reveal" id="pricing">
+    <div class="container">
+      <div class="pricing__grid">
+        <div class="pricing__copy">
+          <h2 class="pricing__h2">Join the flock.</h2>
+          <p class="pricing__body">One price for the whole household. Cancel from the app, in 30 seconds, no phone call.</p>
+        </div>
+        <div class="plan">
+          <div class="plan__price">
+            <span class="plan__amount">R149</span>
+            <span class="plan__period">/ month, household</span>
+          </div>
+          <ul class="plan__features">
+            <li><span class="check" aria-hidden="true">✓</span>Unlimited emergency dispatch</li>
+            <li><span class="check" aria-hidden="true">✓</span>R10 000 per-incident hospital benefit</li>
+            <li><span class="check" aria-hidden="true">✓</span>Live tracking shared with family</li>
+            <li><span class="check" aria-hidden="true">✓</span>Up to 6 household members</li>
+            <li><span class="check" aria-hidden="true">✓</span>First test call included</li>
+          </ul>
+          <a class="btn btn--ink btn--block" href="#signup">Sign up · 4 minutes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNER STRIP · Variant A -->
+  <section class="partners reveal" id="partners">
+    <div class="container partners__row">
+      <p class="partners__copy">Built for South African households, offered by the institutions that already serve them.</p>
+      <div class="partners__logos">
+        <img class="partners__logo" src="/aura.svg" alt="Aura" />
+        <img class="partners__logo partners__logo--bryte" src="/bryte.svg" alt="Bryte" />
+        <img class="partners__logo" src="/unityhealth_logo.svg" alt="Unity Health" />
+        <a class="partners__login" href="#partner-login">+ partner login →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__row">
+    <span>© 2026 Panicbudgie · Cape Town</span>
+    <span>Daylight, not alarm.</span>
+  </div>
+</footer>
+
+<!-- Type playground · debug only -->
+<aside class="dbg" id="dbg">
+  <button class="dbg__toggle" data-toggle aria-label="Open type playground" type="button">⌥ TYPE</button>
+  <div class="dbg__panel" role="dialog" aria-label="Typography playground">
+    <button class="dbg__close" data-close aria-label="Close" type="button">×</button>
+    <h3 class="dbg__title">Type playground</h3>
+
+    <div class="dbg__group">
+      <span class="dbg__label">Pairing</span>
+      <div class="dbg__row">
+        <button class="dbg__btn" data-pairing="single" aria-pressed="true" type="button">Single family</button>
+        <button class="dbg__btn" data-pairing="pair" aria-pressed="false" type="button">Display + body pair</button>
+      </div>
+    </div>
+
+    <div class="dbg__group dbg__single">
+      <span class="dbg__label">Font</span>
+      <select class="dbg__select" data-single>
+        <option value="Bricolage Grotesque">Bricolage Grotesque</option>
+        <option value="Cabinet Grotesk">Cabinet Grotesk</option>
+        <option value="Switzer">Switzer</option>
+        <option value="General Sans">General Sans</option>
+        <option value="Satoshi">Satoshi</option>
+        <option value="Onest">Onest</option>
+        <option value="Hanken Grotesk">Hanken Grotesk</option>
+        <option value="Geist">Geist</option>
+      </select>
+    </div>
+
+    <div class="dbg__group dbg__pair" hidden>
+      <span class="dbg__label">Pair</span>
+      <select class="dbg__select" data-pair>
+        <option value="0">Recoleta + Switzer</option>
+        <option value="1">Cabinet Grotesk + Switzer</option>
+        <option value="2">Stardom + Satoshi</option>
+        <option value="3">Erode + General Sans</option>
+        <option value="4">Bricolage + Geist</option>
+      </select>
+    </div>
+
+    <div class="dbg__group">
+      <span class="dbg__label">Scale ratio</span>
+      <div class="dbg__row">
+        <button class="dbg__btn" data-scale="1.25" aria-pressed="false" type="button">1.25</button>
+        <button class="dbg__btn" data-scale="1.333" aria-pressed="true" type="button">1.333</button>
+        <button class="dbg__btn" data-scale="1.5" aria-pressed="false" type="button">1.5</button>
+      </div>
+    </div>
+
+    <div class="dbg__group">
+      <span class="dbg__label">Display weight</span>
+      <div class="dbg__row">
+        <button class="dbg__btn" data-display-weight="700" aria-pressed="false" type="button">700</button>
+        <button class="dbg__btn" data-display-weight="800" aria-pressed="true" type="button">800</button>
+        <button class="dbg__btn" data-display-weight="900" aria-pressed="false" type="button">900</button>
+      </div>
+      <p class="dbg__summary" data-display-summary></p>
+    </div>
+
+    <div class="dbg__group">
+      <span class="dbg__label">Body weight</span>
+      <div class="dbg__row">
+        <button class="dbg__btn" data-body-weight="300" aria-pressed="false" type="button">300</button>
+        <button class="dbg__btn" data-body-weight="400" aria-pressed="true" type="button">400</button>
+        <button class="dbg__btn" data-body-weight="500" aria-pressed="false" type="button">500</button>
+      </div>
+      <p class="dbg__summary" data-body-summary hidden></p>
+    </div>
+
+    <div class="dbg__group">
+      <span class="dbg__label">Display tracking</span>
+      <div class="dbg__row">
+        <button class="dbg__btn" data-display-track="-0.04em" aria-pressed="false" type="button">−.04</button>
+        <button class="dbg__btn" data-display-track="-0.025em" aria-pressed="true" type="button">−.025</button>
+        <button class="dbg__btn" data-display-track="-0.015em" aria-pressed="false" type="button">−.015</button>
+        <button class="dbg__btn" data-display-track="0" aria-pressed="false" type="button">0</button>
+      </div>
+    </div>
+
+    <button class="dbg__copy" data-copy type="button">Copy settings</button>
+    <p class="dbg__hint">Some fonts only ship limited weights. If a chosen weight isn't available, the browser will substitute the nearest one.</p>
+  </div>
+</aside>
+
+</body>
+</html>

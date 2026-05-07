@@ -1,0 +1,45 @@
+- url: https://panicbudgie.vercel.app
+  output: panicbudgie-desktop.png
+  full_page: true
+  width: 1440
+  retina: true
+  javascript: |
+    (async () => {
+      const delay = ms => new Promise(r => setTimeout(r, ms));
+      document.querySelectorAll('.medical, .how, .testcall, .pricing, .partners, .footer').forEach(el => {
+        el.style.contentVisibility = 'visible';
+      });
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+      await delay(400);
+      const getHeight = () => document.documentElement.scrollHeight;
+      for (let y = 0; y < getHeight(); y += 250) {
+        window.scrollTo(0, y);
+        await delay(120);
+      }
+      await delay(2500);
+      window.scrollTo(0, 0);
+      await delay(500);
+    })()
+
+- url: https://panicbudgie.vercel.app
+  output: panicbudgie-mobile.png
+  full_page: true
+  width: 390
+  retina: true
+  javascript: |
+    (async () => {
+      const delay = ms => new Promise(r => setTimeout(r, ms));
+      document.querySelectorAll('.medical, .how, .testcall, .pricing, .partners, .footer').forEach(el => {
+        el.style.contentVisibility = 'visible';
+      });
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+      await delay(400);
+      const getHeight = () => document.documentElement.scrollHeight;
+      for (let y = 0; y < getHeight(); y += 200) {
+        window.scrollTo(0, y);
+        await delay(150);
+      }
+      await delay(2000);
+      window.scrollTo(0, 0);
+      await delay(500);
+    })()

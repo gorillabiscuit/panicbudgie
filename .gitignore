@@ -1,0 +1,26 @@
+# build / cache
+node_modules
+dist
+.vite
+.DS_Store
+*.log
+
+# Vercel project link is local-only
+.vercel
+
+# Personal tooling state
+.agents
+.claude
+skills-lock.json
+
+# Heavy source assets — too large for git, kept local
+character
+*.psd
+*.3dm
+
+# Client docs (kept local)
+*.docx
+~$*.docx
+
+# Local screenshots / scratch at repo root
+/panicbudgie-*.png

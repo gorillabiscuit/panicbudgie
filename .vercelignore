@@ -1,0 +1,28 @@
+node_modules
+dist
+.vite
+.DS_Store
+*.log
+
+# Source assets — only the published images/ are deployed
+character
+images-src
+prompts
+reference
+
+# Source files we don't ship
+*.psd
+*.3dm
+*.docx
+~$*.docx
+
+# Skill / tooling state
+.agents
+.claude
+skills-lock.json
+
+# Markdown drafts
+PRODUCT.md
+DESIGN.md
+*.md
+!README.md

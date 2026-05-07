@@ -1,0 +1,173 @@
+/* === Type playground panel === */
+/* Floating debug-only UI. Won't ship to production. */
+
+.dbg {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 9999;
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+  color: #FAF3E4;
+}
+.dbg__toggle {
+  background: #1F1B16;
+  color: #F2B705;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 200ms ease;
+  border: 0;
+}
+.dbg__toggle:hover { transform: translateY(-2px); }
+
+.dbg__panel {
+  background: #1F1B16;
+  color: #FAF3E4;
+  border-radius: 16px;
+  padding: 18px 18px 14px;
+  width: 320px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  display: none;
+  position: relative;
+}
+.dbg.is-open .dbg__panel { display: block; }
+.dbg.is-open .dbg__toggle { display: none; }
+
+.dbg__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 0;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  color: #FAF3E4;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+.dbg__close:hover { background: rgba(255, 255, 255, 0.16); }
+
+.dbg__title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #F2B705;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+.dbg__group {
+  margin-bottom: 14px;
+}
+.dbg__group[hidden] { display: none; }
+
+.dbg__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #FAF3E4;
+  opacity: 0.55;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.dbg__row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dbg__btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #FAF3E4;
+  border: 1px solid transparent;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 150ms ease, color 150ms ease;
+}
+.dbg__btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.12); }
+.dbg__btn[aria-pressed="true"] {
+  background: #F2B705;
+  color: #1F1B16;
+  border-color: #F2B705;
+}
+.dbg__btn:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  background: rgba(255, 255, 255, 0.03);
+}
+.dbg__btn:disabled:hover { background: rgba(255, 255, 255, 0.03); }
+
+.dbg__select {
+  background: rgba(255, 255, 255, 0.06);
+  color: #FAF3E4;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  width: 100%;
+  cursor: pointer;
+}
+.dbg__select:focus {
+  outline: 2px solid #F2B705;
+  outline-offset: 1px;
+}
+
+.dbg__copy {
+  width: 100%;
+  background: #F2B705;
+  color: #1F1B16;
+  border: 0;
+  padding: 11px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.dbg__copy:hover { background: #E0A800; }
+.dbg__copy.is-copied {
+  background: #5BA9F5;
+  color: #FAF3E4;
+}
+
+.dbg__hint {
+  font-size: 10px;
+  opacity: 0.5;
+  margin-top: 10px;
+  line-height: 1.4;
+}
+.dbg__summary {
+  font-size: 10px;
+  opacity: 0.45;
+  margin-top: 5px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+.dbg__summary[hidden] { display: none; }
+
+@media print {
+  .dbg { display: none !important; }
+}
